@@ -1,0 +1,10 @@
+{
+	"request_token_url": "https://api.twitter.com/oauth/request_token",
+	"access_token_url": "https://api.twitter.com/oauth/access_token",
+	"authorize_url": "https://twitter.com/oauth/authorize",
+	"consumer_key": "7qjLVkUVpfIl2U3QYaTGWNWvC",
+	"consumer_secret": "6yHDstJFUGmCQIgKHaJ1SqMNT0NaFfCJeiKSzfitMrFUU7EVL7",
+	"oauth_version": "1.0",
+	"oauth_signature": "HMAC-SHA1",
+	"oauth_callback": "https://api-development-ab-kwais.c9users.io/request-token"
+}

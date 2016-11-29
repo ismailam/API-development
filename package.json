@@ -10,7 +10,14 @@
     "rewire": "^2.3.4"
   },
   "dependencies": {
+    "authenticator": "^1.1.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "googleapis": "^14.2.0",
-    "mongoose": "^4.6.8"
+    "mongoose": "^4.6.8",
+    "oauth": "^0.9.14",
+    "passport": "^0.3.2",
+    "restify-cookies": "^0.2.2",
+    "restify-session": "^1.1.1"
   }
 }

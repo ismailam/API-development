@@ -2,13 +2,26 @@
 
 const restify = require('restify')
 const server = restify.createServer()
+const authenticator = require('./modules/authenticator');
+const config = require('./config');
+const url = require('url');
+const CookieParser = require('restify-cookies');
+const schema = require('./schema/schema')
+
 server.use(restify.fullResponse())
 server.use(restify.bodyParser())
 server.use(restify.queryParser())
 server.use(restify.authorizationParser())
+server.use(CookieParser.parse);
 
 
-const schema = require('./schema/schema')
+
+
+
+
+
+
+
 
 const status = {
 	ok: 200,
@@ -108,14 +121,20 @@ server.del('/lists/:tenant_id', (req, res) => {
 	
 	
 
+server.get('/auth/twitter', authenticator.redirectToTwitterLoginPage);
 
 
-
-
-
-
-
-
+server.get(url.parse(config.oauth_callback).path, (req, res) =>{
+   authenticator.authenthicate(req, res, (err) =>{
+      if (err){
+         console.log(err);
+         res.sendStatus(401);
+      }
+      else{
+         res.send("Authentication Successful")
+      }
+   })
+})
 
 
 
