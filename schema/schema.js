@@ -31,3 +31,13 @@ const tenantSchema = new Schema({
 
 // create a model using the schema
 exports.Tenant = mongoose.model('Tenant', tenantSchema)
+
+// create a schema
+const userSchema = new Schema({
+	name: String,
+	username: String,
+	password: String
+})
+
+// create a model using the schema
+exports.User = mongoose.model('User', userSchema)
