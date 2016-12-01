@@ -3,89 +3,108 @@
 
 const schema = require('../schema/schema')
 
-exports.getTenants = new Promise( (resolve, reject) => {
-	schema.Tenant.find((err, tenants) => {
-		if (err) reject(new Error('database error'))
-		if (!tenants.length) reject(new Error('No tenants'))
-		resolve(tenants)
-	})
-})
+exports.addTenant = function(req, res) {
+	
+	res.setHeader('content-type', 'application/json')
+	res.setHeader('accepts', 'GET, POST')
+	
+  // Create a new instance of the Tenant model
+  const tenant = new schema.Tenant();
 
+  tenant.name = req.body.name;
+  tenant.Email = req.body.email;
+  tenant.locations = req.body.locations;
+  tenant.phoneNumber = req.body.phoneNumber;
 
-
-exports.getTenant = tenant => new Promise( (resolve, reject) =>  {
-  schema.User.find({name: tenant.name}, (err, docs) =>  {
-    if (err) reject(new Error('database error'))
-		if (docs.length) resolve(docs)
-		reject(new Error(`Tenant doesnot exist`))
+  
+  tenant.save(function(err) {
+    if (err){
+    	res.send(err);
+    	
+    }
+    res.json({ message: 'Tenant added to the system!', data: tenant});
   });
-});
+};
 
 
-
-
-
-exports.addTenant = tenantInfo => new Promise( (resolve, reject) => {
-    const tenant = new schema.Tenant(tenantInfo)
-
-	tenant.save( (err, tenant) => {
-		if (err) {
-			reject(new Error('an error add tenant to system'))
-		}
-		resolve({message: 'Tenant successfully created!', data: tenant})
-	})
-});
-
-
-exports.updateTenant = tenantName => new Promise( (resolve, reject) =>{
-    schema.Tenant.find({name: tenantName}, (err, tenant) => {
-        if (err) reject(new Error('database error'))
-		if (!tenant.length) reject(new Error('No tenant unavailable'));
-		
-		tenant = new schema.Tenant(tenantName)
+// exports.getTenants = function(req, res) {
+// 	res.setHeader('content-type', 'application/json')
+// 	res.setHeader('accepts', 'GET, POST')
 	
-        // Save the tenantData and check for errors
-    	tenant.update( (err, tenant) => {
-    		if (err) {
-    			reject(new Error('an error updating tenant data'))
-    		}
-    		resolve({ message: 'Tenant successfully updated!', data: tenant })
-    	})
+// 	schema.Tenant.find((err, tenants) =>{
+// 		if (err){
+// 			res.send(err);
+			
+// 		}
+// 		res.json(tenants);
 		
-    })
-    
-})
+// 	});
+// };
 
+// exports.getTenant = function(req, res) {
+// 	// Use the Tenant model to find a specific tenant
+// 	schema.Tenant.findById(req.params.tenant_id, (err, beer) =>{
+// 		if (err){
+// 			res.send(err);
+			
+// 		}
+// 		res.json(beer);
+//   });
+// };
 
-exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
-    schema.Tenant.find({name: tenantName}, (err, tenants) => {
-		if (err) reject(new Error('database error'))
-		if (!tenants.length) reject(new Error('No tenants'));
+// exports.updateTenant = function(req, res) {
+// 	schema.Tenant.findById(req.params.tenant_id, function(err, beer) {
+// 		if (err){
+// 			res.send(err);
+// 		}
+// 		const tenant = new schema.Tenant()
 		
-		const tenant = new schema.Tenant(tenantDetails)
+// 		tenant.update( (err, tenant) =>  {
+// 			if (err){
+// 				res.send(err)
+				
+// 			}
+// 			res.json(tenant);
+			
+// 		});
+//   });
+// };
+
+// exports.deleteTenant = function(req, res) {
 	
-        // Save the tenantData and check for errors
-    	tenant.remove( (err, tenant) => {
-    		if (err) {
-    			reject(new Error('an error deleting tenant data'))
-    		}
-    		resolve({ message: 'Tenant successfully deleted!', data: tenant })
-    	})
+// 	schema.TenantfindByIdAndRemove(req.params.tenant_id, function(err) {
+// 		if (err){
+// 			res.send(err);
+// 		}
+// 		res.json({ message: 'Tenant removed from the system!' });
+//   });
+// };
 
-	})
-    
-})
+// // Create endpoint /api/users for POST
+// exports.postUsers = function(req, res) {
+// 	const user = new schema.User({
+// 		username: req.body.username,
+// 		password: req.body.password
+		
+// 	});
+	
+// 	user.save(function(err) {
+// 		if (err){
+// 			res.send(err);
+// 		}
+// 		res.json({ message: 'Account added to system!' });
+//   });
+// };
 
-
-
-
-
-
-exports.accountExists = account => new Promise( (resolve, reject) => {
-	schema.User.find({username: account.username}, (err, docs) => {
-		if (docs.length) reject(new Error(`username already exists`))
-		resolve()
-	})
-})
-
+// // Create endpoint /api/users for GET
+// exports.getUsers = function(req, res) {
+// 	schema.User.find(function(err, users) {
+// 		if (err){
+// 			res.send(err);
+			
+// 		}
+// 		res.json(users);
+		
+// 	});
+// };
 
