@@ -1,18 +1,9 @@
 'use strict';
-const url = require('url');
-
-
 const authenticator = require('./modules/authenticator');
-const tenantManager = require('./tenantManager');
-const persistence = require('./modules/persistence')
-const config = require('./config');
+const tenantManager = require('./tenantManager.js');
 const restify = require('restify')
-
 const schema = require('./schema/schema')
 const server = restify.createServer()
-
-
-
 
 
 server.use(restify.fullResponse())
@@ -30,50 +21,57 @@ const status = {
 const defaultPort = 8080;
 
 
-server.get('/',  (req, res) =>{
-	res.setHeader('content-type', 'application/json')
-	res.setHeader('accepts', 'GET, POST')
-	
-	tenantManager.showTenants().then((data) => {
-		res.send(status.ok, data)
-	}).catch( err => {
-		res.send(status.badRequest, {error: err.message})
-	})
-	res.end()
+// server.get('/',  (req, res) =>{
+// 	tenantManager.showTenants((err, tenants) => {
+// 		res.setHeader('content-type', 'application/json')
+// 		res.setHeader('accepts', 'GET')
 		
+// 		if (err) {
+// 			res.send(status.badRequest, {error: err.message})
+// 		} else {
+			
+// 			res.send(status.ok, tenants)
+// 		}
+// 		res.end()
+// 	})
 	
+	
+	
+// })
 
-	
+
+// server.post('/tenants', (req, res) => {
+// 	tenantManager.addTenant(req, (err, tenant) => {
+// 		res.setHeader('content-type', 'application/json')
+// 		res.setHeader('accepts', 'GET, POST')
+		
+// 		if (err) {
+// 			res.send(status.badRequest, {error: err.message})
+			
+// 		}
+// 		else {
+// 			res.send(status.added, tenant)
+// 		}
+// 		res.end()
+// 	})
+// })
+
+
+
+server.post('/tenants', (req, res) => {
+	tenantManager.addTenant(req, (err, data) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET, POST')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.added, {tenant: data})
+		}
+		res.end()
+	})
 })
-
-
-
-
-
-server.post('/lists', (req, res) => {
-	res.setHeader('content-type', 'application/json')
-	res.setHeader('accepts', 'GET, POST')
-	
-	
-})
-
-
-server.put('/lists/:tenant_id', (req, res) => {
-	res.setHeader('content-type', 'application/json')
-	res.setHeader('accepts', 'GET, POST', 'PUT')
-	
-
-	
-})
-
-
-server.del('/lists/:tenant_id', (req, res) => {
-	res.setHeader('content-type', 'application/json')
-	res.setHeader('accepts', 'GET, POST', 'PUT', 'DELETE')
-	
-
-});
-	
 
 
 

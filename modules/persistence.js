@@ -13,10 +13,10 @@ exports.getTenants = new Promise( (resolve, reject) => {
 
 
 
-exports.getTenant = tenant => new Promise( (resolve, reject) =>  {
-  schema.User.find({name: tenant.name}, (err, docs) =>  {
-    if (err) reject(new Error('database error'))
-		if (docs.length) resolve(docs)
+exports.getTenant = tenantName => new Promise( (resolve, reject) =>  {
+	schema.Tenant.find({name: tenantName}, (err, tenants) =>  {
+		if (err) reject(new Error('database error'))
+		if (tenants.length) resolve(tenants)
 		reject(new Error(`Tenant doesnot exist`))
   });
 });
@@ -25,16 +25,18 @@ exports.getTenant = tenant => new Promise( (resolve, reject) =>  {
 
 
 
-exports.addTenant = tenantInfo => new Promise( (resolve, reject) => {
+exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
     const tenant = new schema.Tenant(tenantInfo)
 
 	tenant.save( (err, tenant) => {
 		if (err) {
 			reject(new Error('an error add tenant to system'))
 		}
-		resolve({message: 'Tenant successfully created!', data: tenant})
+		resolve({message: 'Tenant successfully created!', tenantInfo})
 	})
 });
+
+
 
 
 exports.updateTenant = tenantName => new Promise( (resolve, reject) =>{
