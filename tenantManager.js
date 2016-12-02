@@ -4,8 +4,8 @@ const persistence = require('./modules/persistence')
 
 
 // // functions 
-exports.showTenants = callback => {
-    persistence.getTenant('musa').then(tenants => {
+exports.showTenant = callback => {
+    persistence.getTenant(' mansaray Ismail').then(tenants => {
 		callback(null, tenants)
 	}).catch(err => {
 		callback(err)
@@ -14,17 +14,32 @@ exports.showTenants = callback => {
 	    
 }
 
-// exports.addTenant = (request, callback) => {
-// 	extractBodyKey(request, 'name').then( name => {
-// 		this.name = name
-		
-// 		console.log(`name: ${name}`);
-// 		return persistence.postTenant(name)
-// 	}).then( data => callback(null, data))
-// 	.catch( err => callback(err))
-// }
+exports.showTenants = callback => {
+    persistence.getTenant().then(tenants => {
+		callback(null, tenants)
+	}).catch(err => {
+		callback(err)
+	})
+    
+	    
+}
+
+exports.addTenant = (request, callback) => {
+	extractBodyKey(request, 'name').then( (name, location, age) => {
+		const tenantI= {
+			name: request.body.name,
+			location: request.body.locations,
+			age: request.body.age
+		}
+		console.log(tenantI);
+		return persistence.postTenant(tenantI)
+	}).then( data => callback(null, data))
+	.catch( err => callback(err))
+}
 	
-	
+
+
+
 
 
 

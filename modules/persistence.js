@@ -3,13 +3,13 @@
 
 const schema = require('../schema/schema')
 
-// exports.getTenants = new Promise( (resolve, reject) => {
-// 	schema.Tenant.find((err, tenants) => {
-// 		if (err) reject(new Error('database error'))
-// 		if (!tenants.length) reject(new Error('No tenants'))
-// 		resolve(tenants)
-// 	})
-// })
+exports.getTenants = new Promise( (resolve, reject) => {
+	schema.Tenant.find((err, tenants) => {
+		if (err) reject(new Error('database error'))
+		if (!tenants.length) reject(new Error('No tenants'))
+		resolve(tenants)
+	})
+})
 
 
 
@@ -25,31 +25,31 @@ exports.getTenant = tenantName => new Promise( (resolve, reject) =>  {
 
 
 
-// exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
-//     const tenant = new schema.Tenant(tenantInfo)
+exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
+    const tenant = new schema.Tenant(tenantInfo)
 
-// 	tenant.save( (err, tenant) => {
-// 		if (err) {
-// 			reject(new Error('an error add tenant to system'))
-// 		}
-// 		resolve({message: 'Tenant successfully created!', tenantInfo})
-// 	})
-// });
+	tenant.save( (err, tenant) => {
+		if (err) {
+			reject(new Error('an error add tenant to system'))
+		}
+		resolve({message: 'Tenant successfully created!', tenantInfo})
+	})
+});
 
 
 
 
 // exports.updateTenant = tenantName => new Promise( (resolve, reject) =>{
 //     schema.Tenant.find({name: tenantName}, (err, tenant) => {
-//         if (err) reject(new Error('database error'))
-// 		if (!tenant.length) reject(new Error('No tenant unavailable'));
-		
-// 		tenant = new schema.Tenant(tenantName)
-	
-//         // Save the tenantData and check for errors
+//     	if (err) reject(new Error('database error'))
+//     	if (!tenant.length) reject(new Error('No tenant unavailable'));
+    	
+//     	tenant = new schema.Tenant(tenantName)
+//     	// Save the tenantData and check for errors
 //     	tenant.update( (err, tenant) => {
 //     		if (err) {
 //     			reject(new Error('an error updating tenant data'))
+    			
 //     		}
 //     		resolve({ message: 'Tenant successfully updated!', data: tenant })
 //     	})
@@ -57,6 +57,8 @@ exports.getTenant = tenantName => new Promise( (resolve, reject) =>  {
 //     })
     
 // })
+
+
 
 
 // exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
@@ -82,14 +84,6 @@ exports.getTenant = tenantName => new Promise( (resolve, reject) =>  {
 
 
 
-
-// exports.accountExists = account => new Promise( (resolve, reject) => {
-// 	schema.User.find({username: account.username}, (err, docs) => {
-// 		if (docs.length) reject(new Error(`username already exists`))
-// 		resolve()
-// 	})
-// })
-
 //users
 
 // exports.postUsers = function(req, res) {
@@ -102,32 +96,31 @@ exports.getTenant = tenantName => new Promise( (resolve, reject) =>  {
 //     if (err)
 //       res.send(err);
 
-//     res.json({ message: 'New beer drinker added to the locker room!' });
+//     res.json({ message: 'New user added to system!' });
 //   });
 // };
 
-exports.postUsers = credentials => new Promise( (resolve, reject) => {
+// exports.postUsers = credentials => new Promise( (resolve, reject) => {
 
-	const user = new schema.User(credentials)
+// 	const user = new schema.User(credentials)
 
-	user.save( (err, user) => {
-		if (err) {
-			reject(new Error('error creating account'))
-		}
+// 	user.save( (err, user) => {
+// 		if (err) {
+// 			reject(new Error('error creating account'))
+// 		}
 		
-		resolve(credentials)
-	})
-})
+// 		resolve(credentials)
+// 	})
+// })
 
 
-...
 
-UserSchema.methods.verifyPassword = function(password, cb) {
-  bcrypt.compare(password, this.password, function(err, isMatch) {
-  	if (err) return cb(err);
-    cb(null, isMatch);
-  });
-};
+// UserSchema.methods.verifyPassword = function(password, cb) {
+//   bcrypt.compare(password, this.password, function(err, isMatch) {
+//   	if (err) return cb(err);
+//     cb(null, isMatch);
+//   });
+// };
 
-// Export the Mongoose model
-module.exports = mongoose.model('User', UserSchema);
+// // Export the Mongoose model
+// module.exports = mongoose.model('User', UserSchema);
