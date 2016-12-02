@@ -21,23 +21,23 @@ const status = {
 const defaultPort = 8080;
 
 
-// server.get('/',  (req, res) =>{
-// 	tenantManager.showTenants((err, tenants) => {
-// 		res.setHeader('content-type', 'application/json')
-// 		res.setHeader('accepts', 'GET')
+server.get('/',  (req, res) =>{
+	tenantManager.showTenants((err, tenants) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET')
 		
-// 		if (err) {
-// 			res.send(status.badRequest, {error: err.message})
-// 		} else {
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
 			
-// 			res.send(status.ok, tenants)
-// 		}
-// 		res.end()
-// 	})
+			res.send(status.ok, tenants)
+		}
+		res.end()
+	})
 	
 	
 	
-// })
+})
 
 
 // server.post('/tenants', (req, res) => {
@@ -58,20 +58,20 @@ const defaultPort = 8080;
 
 
 
-server.post('/tenants', (req, res) => {
-	tenantManager.addTenant(req, (err, data) => {
-		res.setHeader('content-type', 'application/json')
-		res.setHeader('accepts', 'GET, POST')
+// server.post('/tenants', (req, res) => {
+// 	tenantManager.addTenant(req, (err, data) => {
+// 		res.setHeader('content-type', 'application/json')
+// 		res.setHeader('accepts', 'GET, POST')
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
+// 		if (err) {
+// 			res.send(status.badRequest, {error: err.message})
+// 		} else {
 			
-			res.send(status.added, {tenant: data})
-		}
-		res.end()
-	})
-})
+// 			res.send(status.added, {tenant: data})
+// 		}
+// 		res.end()
+// 	})
+// })
 
 
 

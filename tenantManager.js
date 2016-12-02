@@ -14,15 +14,15 @@ exports.showTenants = callback => {
 	    
 }
 
-exports.addTenant = (request, callback) => {
-	extractBodyKey(request, 'name').then( name => {
-		this.name = name
+// exports.addTenant = (request, callback) => {
+// 	extractBodyKey(request, 'name').then( name => {
+// 		this.name = name
 		
-		console.log(`name: ${name}`);
-		return persistence.postTenant(name)
-	}).then( data => callback(null, data))
-	.catch( err => callback(err))
-}
+// 		console.log(`name: ${name}`);
+// 		return persistence.postTenant(name)
+// 	}).then( data => callback(null, data))
+// 	.catch( err => callback(err))
+// }
 	
 	
 
