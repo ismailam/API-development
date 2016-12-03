@@ -3,6 +3,10 @@
 
 const schema = require('../schema/schema');
 const userschema = require('../schema/userSchema');
+var passport = require('passport');
+var BasicStrategy = require('passport-http').BasicStrategy;
+
+
 
 exports.getTenants = new Promise( (resolve, reject) => {
 	schema.Tenant.find((err, tenants) => {
@@ -87,14 +91,11 @@ exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
 
 
 exports.postUsers = credentials => new Promise( (resolve, reject) => {
-
 	const user = new userschema(credentials)
-
 	user.save( (err, user) => {
 		if (err) {
 			reject(new Error('error creating account'))
 		}
-		
 		resolve(credentials)
 	})
 })
@@ -109,6 +110,18 @@ exports.getUsers = accountUsername => new Promise( (resolve, reject) =>  {
 });
 
 
-
+//authentication
+exports.getCredentials = credentials => new Promise( (resolve, reject) => {
+	passport.use(new BasicStrategy(
+		schema.User.find({username: credentials.username}, (err, docs) => {
+			if (err) reject(new Error('database error'))
+			if (docs.length) resolve(docs)
+			reject(new Error('invalid username'))
+			
+		});
+		))
+	
+}))
+	
 
 

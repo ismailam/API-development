@@ -1,7 +1,7 @@
 'use strict'
 
 const persistence = require('./modules/persistence')
-const authenticator = require('./modules/authenticator');
+const auth = require('./modules/authenticator');
 
 // // functions 
 exports.showTenant = callback => {
@@ -14,8 +14,17 @@ exports.showTenant = callback => {
 	    
 }
 
-exports.showTenants = (callback)=> {
-	authenticator.isAuthenticated().then( () => { 
+exports.showTenants = (request,callback)=> {
+	auth.getHeaderCredentials(request).then( credentials => {
+		this.username = credentials.username
+		this.password = credentials.password
+		return auth.hashPassword(credentials)
+	}).then( credentials => {
+		return persistence.getCredentials(credentials)
+	}).then( account => {
+		const hash = account[0].password
+		return auth.verifyPassword(this.password, hash)
+	}).then( () => { 
 		return persistence.getTenant()
 	}).then(tenants => {
 		callback(null, tenants)
