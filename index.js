@@ -77,6 +77,42 @@ server.post('/tenants', (req, res) => {
 
 
 
+				//METHODS FOR USERS
+
+server.get('/users',  (req, res) =>{
+	tenantManager.showUser((err, users) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.ok, users)
+		}
+		res.end()
+	})
+	
+	
+})
+
+
+
+
+server.post('/users', (req, res) => {
+	tenantManager.addUser(req, (err, data) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET, POST')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.added, {user: data})
+		}
+		res.end()
+	})
+})
 
 
 
@@ -92,5 +128,8 @@ server.listen(port, err => {
 		console.log('App is ready at : ' + port)
 	}
 })
+
+
+
 
 

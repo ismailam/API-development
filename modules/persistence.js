@@ -6,8 +6,9 @@ const schema = require('../schema/schema')
 exports.getTenants = new Promise( (resolve, reject) => {
 	schema.Tenant.find((err, tenants) => {
 		if (err) reject(new Error('database error'))
-		if (!tenants.length) reject(new Error('No tenants'))
-		resolve(tenants)
+		if (tenants.length) resolve(tenants) 
+		reject(new Error('No tenants'))
+		
 	})
 })
 
@@ -84,35 +85,27 @@ exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
 
 
 
-//users
+exports.postUsers = credentials => new Promise( (resolve, reject) => {
 
-// exports.postUsers = function(req, res) {
-//   var user = new User({
-//     username: req.body.username,
-//     password: req.body.password
-//   });
+	const user = new schema(credentials)
 
-//   user.save(function(err) {
-//     if (err)
-//       res.send(err);
-
-//     res.json({ message: 'New user added to system!' });
-//   });
-// };
-
-// exports.postUsers = credentials => new Promise( (resolve, reject) => {
-
-// 	const user = new schema.User(credentials)
-
-// 	user.save( (err, user) => {
-// 		if (err) {
-// 			reject(new Error('error creating account'))
-// 		}
+	user.save( (err, user) => {
+		if (err) {
+			reject(new Error('error creating account'))
+		}
 		
-// 		resolve(credentials)
-// 	})
-// })
+		resolve(credentials)
+	})
+})
 
+
+exports.getUsers = accountUsername => new Promise( (resolve, reject) =>  {
+	schema.Tenant.find({username: accountUsername}, (err, users) =>  {
+		if (err) reject(new Error('database error'))
+		if (users.length) resolve(users)
+		reject(new Error(`user doesnot exist`))
+  });
+});
 
 
 // UserSchema.methods.verifyPassword = function(password, cb) {

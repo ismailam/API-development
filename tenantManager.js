@@ -37,10 +37,30 @@ exports.addTenant = (request, callback) => {
 	.catch( err => callback(err))
 }
 	
+//Model Crud user
+exports.addUser = (request, callback) => {
+	extractBodyKey(request, 'username').then( (username, password) => {
+		const userI= {
+			username: request.body.username,
+			password: request.body.password
+			
+		}
+		console.log(userI);
+		return persistence.postUsers(userI)
+	}).then( data => callback(null, data))
+	.catch( err => callback(err))
+}
+	
 
-
-
-
+exports.showUser = callback => {
+    persistence.getUsers('root').then(users => {
+		callback(null, users)
+	}).catch(err => {
+		callback(err)
+	})
+    
+	    
+}
 
 
 
