@@ -1,7 +1,8 @@
 
 'use strict'
 
-const schema = require('../schema/schema')
+const schema = require('../schema/schema');
+const userschema = require('../schema/userSchema');
 
 exports.getTenants = new Promise( (resolve, reject) => {
 	schema.Tenant.find((err, tenants) => {
@@ -14,7 +15,7 @@ exports.getTenants = new Promise( (resolve, reject) => {
 
 
 
-exports.getTenant = tenantName => new Promise( (resolve, reject) =>  {
+exports.getTenant = tenantName => new Promise( (resolve, reject) =>{
 	schema.Tenant.find({name: tenantName}, (err, tenants) =>  {
 		if (err) reject(new Error('database error'))
 		if (tenants.length) resolve(tenants)
@@ -87,7 +88,7 @@ exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
 
 exports.postUsers = credentials => new Promise( (resolve, reject) => {
 
-	const user = new schema(credentials)
+	const user = new userschema(credentials)
 
 	user.save( (err, user) => {
 		if (err) {
@@ -100,7 +101,7 @@ exports.postUsers = credentials => new Promise( (resolve, reject) => {
 
 
 exports.getUsers = accountUsername => new Promise( (resolve, reject) =>  {
-	schema.Tenant.find({username: accountUsername}, (err, users) =>  {
+	userschema.User.find({username: accountUsername}, (err, users) =>  {
 		if (err) reject(new Error('database error'))
 		if (users.length) resolve(users)
 		reject(new Error(`user doesnot exist`))
@@ -108,12 +109,6 @@ exports.getUsers = accountUsername => new Promise( (resolve, reject) =>  {
 });
 
 
-// UserSchema.methods.verifyPassword = function(password, cb) {
-//   bcrypt.compare(password, this.password, function(err, isMatch) {
-//   	if (err) return cb(err);
-//     cb(null, isMatch);
-//   });
-// };
 
-// // Export the Mongoose model
-// module.exports = mongoose.model('User', UserSchema);
+
+

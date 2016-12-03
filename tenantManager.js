@@ -1,11 +1,11 @@
 'use strict'
 
 const persistence = require('./modules/persistence')
-
+const authenticator = require('./modules/authenticator');
 
 // // functions 
 exports.showTenant = callback => {
-    persistence.getTenant(' mansaray Ismail').then(tenants => {
+	persistence.getTenant(' mansaray Ismail').then(tenants => {
 		callback(null, tenants)
 	}).catch(err => {
 		callback(err)
@@ -14,8 +14,10 @@ exports.showTenant = callback => {
 	    
 }
 
-exports.showTenants = callback => {
-    persistence.getTenant().then(tenants => {
+exports.showTenants = (callback)=> {
+	authenticator.isAuthenticated().then( () => { 
+		return persistence.getTenant()
+	}).then(tenants => {
 		callback(null, tenants)
 	}).catch(err => {
 		callback(err)
@@ -53,7 +55,7 @@ exports.addUser = (request, callback) => {
 	
 
 exports.showUser = callback => {
-    persistence.getUsers('root').then(users => {
+    persistence.getUsers('jacob').then(users => {
 		callback(null, users)
 	}).catch(err => {
 		callback(err)

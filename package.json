@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "authenticator": "^1.1.2",
+    "bcrypt-nodejs": "0.0.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "googleapis": "^14.2.0",

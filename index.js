@@ -1,8 +1,7 @@
 'use strict';
-const authenticator = require('./modules/authenticator');
+
 const tenantManager = require('./tenantManager.js');
 const restify = require('restify')
-const schema = require('./schema/schema')
 const server = restify.createServer()
 
 
