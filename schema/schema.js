@@ -2,6 +2,8 @@
 
 // import the mongoose package
 const mongoose = require('mongoose')
+
+
 const db = {
 	user: 'ismailam',
 	pass: '38055322abba'
@@ -24,11 +26,13 @@ const tenantSchema = new Schema({
 	roomNumber: Number,
 	rentAmount: Number,
 	startDate: Date,
-	endDate: Date
-	
-	
+	endDate: Date,
+	userId: String
 })
 
 // create a model using the schema
 exports.Tenant = mongoose.model('Tenant', tenantSchema)
+
+
+
 

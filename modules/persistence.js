@@ -3,13 +3,10 @@
 
 const schema = require('../schema/schema');
 const userschema = require('../schema/userSchema');
-var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
-
 
 
 exports.getTenants = new Promise( (resolve, reject) => {
-	schema.Tenant.find((err, tenants) => {
+	schema.Tenant.find( (err, tenants) => {
 		if (err) reject(new Error('database error'))
 		if (tenants.length) resolve(tenants) 
 		reject(new Error('No tenants'))
@@ -32,8 +29,8 @@ exports.getTenant = tenantName => new Promise( (resolve, reject) =>{
 
 
 exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
-    const tenant = new schema.Tenant(tenantInfo)
-
+	const tenant = new schema.Tenant(tenantInfo)
+	
 	tenant.save( (err, tenant) => {
 		if (err) {
 			reject(new Error('an error add tenant to system'))
@@ -45,24 +42,24 @@ exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
 
 
 
-// exports.updateTenant = tenantName => new Promise( (resolve, reject) =>{
-//     schema.Tenant.find({name: tenantName}, (err, tenant) => {
-//     	if (err) reject(new Error('database error'))
-//     	if (!tenant.length) reject(new Error('No tenant unavailable'));
+exports.updateTenant = tenantName => new Promise( (resolve, reject) =>{
+	schema.Tenant.find({name: tenantName}, (err, tenant) => {
+    	if (err) reject(new Error('database error'))
+    	if (!tenant.length) reject(new Error('No tenant unavailable'));
     	
-//     	tenant = new schema.Tenant(tenantName)
-//     	// Save the tenantData and check for errors
-//     	tenant.update( (err, tenant) => {
-//     		if (err) {
-//     			reject(new Error('an error updating tenant data'))
+    	tenant = new schema.Tenant(tenantName)
+    	// Save the tenantData and check for errors
+    	tenant.update( (err, tenants) => {
+    		if (err) {
+    			reject(new Error('an error updating tenant data'))
     			
-//     		}
-//     		resolve({ message: 'Tenant successfully updated!', data: tenant })
-//     	})
+    		}
+    		resolve({ message: 'Tenant successfully updated!', tenants })
+    	})
 		
-//     })
+    })
     
-// })
+})
 
 
 
@@ -89,39 +86,24 @@ exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
 
 
 
-
-exports.postUsers = credentials => new Promise( (resolve, reject) => {
-	const user = new userschema(credentials)
-	user.save( (err, user) => {
+exports.postUser = userInfo => new Promise( (resolve, reject) => {
+	const user = new userschema(userInfo)
+	
+	user.save( (err, userI) => {
 		if (err) {
-			reject(new Error('error creating account'))
+			reject(new Error('an error adding user to system'))
 		}
-		resolve(credentials)
+		resolve({message: 'Tenant successfully created!', userI})
 	})
-})
+});
 
 
-exports.getUsers = accountUsername => new Promise( (resolve, reject) =>  {
-	userschema.User.find({username: accountUsername}, (err, users) =>  {
+
+
+exports.getUsers = new Promise( (resolve, reject) =>  {
+	userschema.User.find((err, users) =>  {
 		if (err) reject(new Error('database error'))
 		if (users.length) resolve(users)
 		reject(new Error(`user doesnot exist`))
   });
 });
-
-
-//authentication
-exports.getCredentials = credentials => new Promise( (resolve, reject) => {
-	passport.use(new BasicStrategy(
-		schema.User.find({username: credentials.username}, (err, docs) => {
-			if (err) reject(new Error('database error'))
-			if (docs.length) resolve(docs)
-			reject(new Error('invalid username'))
-			
-		});
-		))
-	
-}))
-	
-
-

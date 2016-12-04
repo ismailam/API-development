@@ -3,7 +3,7 @@
 const tenantManager = require('./tenantManager.js');
 const restify = require('restify')
 const server = restify.createServer()
-
+const auth = require('./modules/authenticator');
 
 server.use(restify.fullResponse())
 server.use(restify.bodyParser())
@@ -20,8 +20,8 @@ const status = {
 const defaultPort = 8080;
 
 
-server.get('/',  (req, res) =>{
-	tenantManager.showTenant((err, tenants) => {
+server.get('/', auth.isAuthenticated, (req, res) =>{
+	tenantManager.showTenant({ userId: req.user._id, _id: req.params.beer_id }, (err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		
@@ -38,8 +38,9 @@ server.get('/',  (req, res) =>{
 	
 })
 
-server.get('/tenants',  (req, res) =>{
-	tenantManager.showTenants((err, tenants) => {
+server.get('/tenants', auth.isAuthenticated, (req, res) =>{
+	
+	tenantManager.showTenants({ userId: req.user._id }, (err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		
@@ -58,7 +59,7 @@ server.get('/tenants',  (req, res) =>{
 
 
 
-server.post('/tenants', (req, res) => {
+server.post('/tenants', auth.isAuthenticated, (req, res) => {
 	tenantManager.addTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST')
@@ -74,12 +75,27 @@ server.post('/tenants', (req, res) => {
 })
 
 
+server.put('/tenants', auth.isAuthenticated, (req, res) => {
+	tenantManager.putTenant(req, (err, data) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET, POST', 'PUT')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.added, {tenant: data})
+		}
+		res.end()
+	})
+})
 
 
-				//METHODS FOR USERS
 
+
+//routing for users
 server.get('/users',  (req, res) =>{
-	tenantManager.showUser((err, users) => {
+	tenantManager.showUsers((err, users) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		
