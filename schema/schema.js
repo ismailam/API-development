@@ -26,8 +26,7 @@ const tenantSchema = new Schema({
 	roomNumber: Number,
 	rentAmount: Number,
 	startDate: Date,
-	endDate: Date,
-	userId: String
+	endDate: Date
 })
 
 // create a model using the schema

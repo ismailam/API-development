@@ -6,7 +6,7 @@
 const persistence = require('../modules/persistence');
 const schema = require('../schema/schema')
 
-describe('removes, add, count tenant collection', () => {
+describe('removes, adds, counts tenant collection', () => {
 	beforeEach( done => {
 		schema.Tenant.remove({}, err => {
 			if (err) expect(true).toBe(false)
@@ -14,7 +14,7 @@ describe('removes, add, count tenant collection', () => {
 				if (err) expect(true).toBe(false)
 				schema.Tenant.count({}, (err, count) => {
 					if (err) expect(true).toBe(false)
-					expect(count).toBe(8)
+					expect(count).toBe(1)
 					done()
 				})
 			})
@@ -22,4 +22,24 @@ describe('removes, add, count tenant collection', () => {
 	})
 	
 	
+	describe('add', () => {
+		it('should add a new Tenant', done => {
+			const tenantI = {
+				name: 'isa', 
+				age: 16,
+				location: 'coventry'
+				
+			}
+
+			persistence.postTenant(tenantI, (err, tenant) => {
+			    if (err) expect(true).toBe(false)
+				schema.Tenant.count({}, (err, count) => {
+					if (err) expect(true).toBe(false)
+					expect(count).toBe(2)
+					done()
+				})
+			})
+		})
+	})
+
 })

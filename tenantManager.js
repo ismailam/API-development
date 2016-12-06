@@ -3,7 +3,7 @@
 const persistence = require('./modules/persistence')
 const auth = require('./modules/authenticator');
 
-
+//' mansaray Ismail'
 
 //shows one tenant
 exports.showTenant = (callback) => {
@@ -32,8 +32,7 @@ exports.addTenant = (request, callback) => {
 		const tenantI= {
 			name: request.body.name,
 			location: request.body.locations,
-			age: request.body.age
-			userId: request.user._id;
+			age: request.body.age,
 		}
 		console.log(tenantI);
 		return persistence.postTenant(tenantI)

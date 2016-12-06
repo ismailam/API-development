@@ -21,7 +21,7 @@ const defaultPort = 8080;
 
 
 server.get('/', auth.isAuthenticated, (req, res) =>{
-	tenantManager.showTenant({ userId: req.user._id, _id: req.params.beer_id }, (err, tenants) => {
+	tenantManager.showTenant((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		
@@ -40,7 +40,7 @@ server.get('/', auth.isAuthenticated, (req, res) =>{
 
 server.get('/tenants', auth.isAuthenticated, (req, res) =>{
 	
-	tenantManager.showTenants({ userId: req.user._id }, (err, tenants) => {
+	tenantManager.showTenants((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		
@@ -89,6 +89,10 @@ server.put('/tenants', auth.isAuthenticated, (req, res) => {
 		res.end()
 	})
 })
+
+
+
+
 
 
 
