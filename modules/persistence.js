@@ -83,9 +83,8 @@ exports.updateTenant = tenantName => new Promise( (resolve, reject) =>{
     
 // })
 
-// this exported function returns how many documents
-// there are in the MongoDB database
-exports.count = callback => {
+
+exports.Count = callback => {
 	schema.Tenant.count({}, (err, count) => {
 		if (err) {
 			callback(err)
@@ -96,9 +95,8 @@ exports.count = callback => {
 }
 
 
-// this is an anonymous function that returns a promise.
-exports.remove = tenantName => new Promise( (resolve, reject) => {
-	schema.Tenant.find({name: tenantName}).remove( err => {
+exports.removeTenant = tenantName => new Promise( (resolve, reject) => {
+	schema.List.find({name: tenantName}).remove( err => {
 		if (err) return reject(err)
 		resolve()
 	})
@@ -108,6 +106,7 @@ exports.remove = tenantName => new Promise( (resolve, reject) => {
 
 
 /******************* post users  ****************************/
+/********************USER REGISTRATION *************************/
 exports.postUser = userInfo => new Promise( (resolve, reject) => {
 	const user = new userschema(userInfo)
 	
@@ -131,12 +130,4 @@ exports.getUsers = new Promise( (resolve, reject) =>  {
 });
 
 
-exports.count = callback => {
-	schema.List.count({}, (err, count) => {
-		if (err) {
-			callback(err)
-			
-		}
-		callback(null, count)
-	})
-}
+

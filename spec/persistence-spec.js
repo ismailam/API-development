@@ -4,42 +4,75 @@
 /* global expect */
 
 const persistence = require('../modules/persistence');
-const schema = require('../schema/schema')
+const schema = require('../schema/schema');
 
-describe('removes, adds, counts tenant collection', () => {
+describe('tenant collection', () => {
 	beforeEach( done => {
 		schema.Tenant.remove({}, err => {
 			if (err) expect(true).toBe(false)
-			new schema.Tenant({name: 'munirah', age: 16, location: 'coventry'}).save( (err, tenant) => {
+			const tenantI = {
+				name: 'kundra', 
+				age: 189,
+				location: 'watford'
+				
+			}
+			new schema.Tenant(tenantI).save( (err, tenant) => {
 				if (err) expect(true).toBe(false)
-				schema.Tenant.count({}, (err, count) => {
+					schema.Tenant.count({}, (err, count) => {
 					if (err) expect(true).toBe(false)
 					expect(count).toBe(1)
 					done()
 				})
 			})
+		
 		})
 	})
 	
+	describe('remove', () => {
+		it('- existing tenant', done => {
+			persistence.removeTenant('kundra').then( () => {
+				schema.Tenant.count({}, (err, count) => {
+					if (err) expect(true).toBe(false)
+					expect(count).toBe(0)
+					done()
+				})
+				
+			})
+			.catch( err => {
+				if (err){
+					console.log(err);
+					expect(true).toBe(false)
+				} 
+				done()
+			})
+		})
+	})
 	
 	describe('add', () => {
-		it('should add a new Tenant', done => {
+		it('+ new tenant', done => {
 			const tenantI = {
-				name: 'isa', 
+				name: 'jafru', 
 				age: 16,
-				location: 'coventry'
+	 			location: 'coventry'
 				
 			}
-
-			persistence.postTenant(tenantI, (err, tenant) => {
-			    if (err) expect(true).toBe(false)
+			persistence.postTenant(tenantI).then( () => {
 				schema.Tenant.count({}, (err, count) => {
 					if (err) expect(true).toBe(false)
 					expect(count).toBe(2)
 					done()
 				})
+				
+			})
+			.catch( err => {
+				if (err){
+					console.log(err);
+					expect(true).toBe(false)
+				} 
+				done()
 			})
 		})
 	})
+	
 
 })
