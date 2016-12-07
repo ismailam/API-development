@@ -42,46 +42,35 @@ exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
 
 
 
-exports.updateTenant = tenantName => new Promise( (resolve, reject) =>{
-	schema.Tenant.find({name: tenantName}, (err, tenant) => {
-    	if (err) reject(new Error('database error'))
-    	if (!tenant.length) reject(new Error('No tenant unavailable'));
-    	
-    	tenant = new schema.Tenant(tenantName)
-    	// Save the tenantData and check for errors
-    	tenant.update( (err, tenants) => {
-    		if (err) {
-    			reject(new Error('an error updating tenant data'))
-    			
-    		}
-    		resolve({ message: 'Tenant successfully updated!', tenants })
-    	})
-		
-    })
-    
+
+
+
+exports.updateTenant = (tenantName, tenantAge) => new Promise( (resolve, reject) =>{
+	schema.Tenant.findOneAndUpdate({name: tenantName}, {$set:{age:tenantAge}}, {new: true}, (err, doc) =>{
+		if (err) {
+			console.log(err)
+			reject(new Error('an error updating tenant data'))
+			
+		}
+		resolve({ message: 'Tenant successfully updated!', doc })
+	})
+
+	
+ })
+
+
+
+
+
+exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
+	schema.Tenant.remove( {},(err) =>{
+		if (err) {
+    			reject(new Error('an error deleting tenant data'))
+     		}
+     		resolve({ message: 'Tenant successfully deleted!'})
+	} )
 })
 
-
-
-
-// exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
-//     schema.Tenant.find({name: tenantName}, (err, tenants) => {
-// 		if (err) reject(new Error('database error'))
-// 		if (!tenants.length) reject(new Error('No tenants'));
-		
-// 		const tenant = new schema.Tenant(tenantDetails)
-	
-//         // Save the tenantData and check for errors
-//     	tenant.remove( (err, tenant) => {
-//     		if (err) {
-//     			reject(new Error('an error deleting tenant data'))
-//     		}
-//     		resolve({ message: 'Tenant successfully deleted!', data: tenant })
-//     	})
-
-// 	})
-    
-// })
 
 
 exports.Count = callback => {
@@ -95,12 +84,15 @@ exports.Count = callback => {
 }
 
 
-exports.removeTenant = tenantName => new Promise( (resolve, reject) => {
-	schema.List.find({name: tenantName}).remove( err => {
-		if (err) return reject(err)
-		resolve()
-	})
-})
+// exports.removeTenant = tenantName => new Promise( (resolve, reject) => {
+// 	console.log(`tenantName: ${tenantName}`)
+// 	schema.List.find({name: tenantName}).remove( (err,result) => {
+// 		console.log('ERR')
+// 		console.log(err)
+// 		if (err) return reject(err)
+// 		resolve(result)
+// 	})
+// })
 
 
 

@@ -7,7 +7,7 @@ const auth = require('./modules/authenticator');
 
 //shows one tenant
 exports.showTenant = (callback) => {
-	persistence.getTenant(' mansaray Ismail')
+	persistence.getTenant('kundra')
 	.then(tenants => {
 		callback(null, tenants)
 	}).catch(err => {
@@ -28,7 +28,7 @@ exports.showTenants = (callback)=> {
 
 //add tenant
 exports.addTenant = (request, callback) => {
-	extractBodyKey(request, 'name').then( (name, location, age, userId) => {
+	extractBodyKey(request, 'name').then( (name, location, age) => {
 		const tenantI= {
 			name: request.body.name,
 			location: request.body.locations,
@@ -40,19 +40,32 @@ exports.addTenant = (request, callback) => {
 	.catch( err => callback(err))
 }
 
-//update tenant	
+//update tenant	data 
 exports.putTenant = (request, callback) => {
-	extractBodyKey(request, 'age').then( (age, location) => {
-		const tenantI= {
-			age: request.body.age,
-			location: request.body.locations
-			
-		}
-		console.log(tenantI);
-		return persistence.putTenant(tenantI)
+	extractBodyKey(request, 'age').then( () => {
+		
+		const age = request.body.age
+		
+		return persistence.updateTenant('kundra', age)
 	}).then( data => callback(null, data))
 	.catch( err => callback(err))
 }
+
+//deletes tenant
+exports.removeTenant = (callback) => {
+	persistence.deleteTenant()
+	.then(tenants => {
+		callback(null, tenants)
+	}).catch(err => {
+		callback(err)
+	})
+}
+
+
+
+
+
+
 
 
 
@@ -67,6 +80,9 @@ exports.showUsers = (callback)=> {
 	})
 	
 }
+
+
+
 
 //add users
 exports.addUser = (request, callback) => {

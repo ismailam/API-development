@@ -75,7 +75,7 @@ server.post('/tenants', auth.isAuthenticated, (req, res) => {
 })
 
 
-server.put('/tenants', auth.isAuthenticated, (req, res) => {
+server.put('/tenants/update', auth.isAuthenticated, (req, res) => {
 	tenantManager.putTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST', 'PUT')
@@ -90,6 +90,20 @@ server.put('/tenants', auth.isAuthenticated, (req, res) => {
 	})
 })
 
+server.del('/tenants/delete', auth.isAuthenticated, (req, res) => {
+	tenantManager.removeTenant(req, (err) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'DELETE')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.ok)
+		}
+		res.end()
+	})
+})
 
 
 
@@ -132,6 +146,8 @@ server.post('/users', (req, res) => {
 		res.end()
 	})
 })
+
+
 
 
 

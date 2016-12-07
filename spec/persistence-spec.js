@@ -28,12 +28,12 @@ describe('tenant collection', () => {
 		})
 	})
 	
-	describe('remove', () => {
-		it('- existing tenant', done => {
-			persistence.removeTenant('kundra').then( () => {
+	describe('get', () => {
+		it(' show tenant', done => {
+			persistence.getTenant('kundra').then( () => {
 				schema.Tenant.count({}, (err, count) => {
 					if (err) expect(true).toBe(false)
-					expect(count).toBe(0)
+					expect(count).toBe(1)
 					done()
 				})
 				
@@ -47,7 +47,7 @@ describe('tenant collection', () => {
 			})
 		})
 	})
-	
+
 	describe('add', () => {
 		it('+ new tenant', done => {
 			const tenantI = {
@@ -73,6 +73,46 @@ describe('tenant collection', () => {
 			})
 		})
 	})
+	
+	describe('update', () => {
+		it(' modify tenant', done => {
+			const age =  16;
+			persistence.updateTenant('kundra', age).then( () => {
+				schema.Tenant.count({}, (err, count) => {
+					if (err) expect(true).toBe(false)
+					expect(count).toBe(1)
+					done()
+				})
+				
+			})
+			.catch( err => {
+				if (err){
+					console.log(err);
+					expect(true).toBe(false)
+				} 
+				done()zur
+			})
+		})
+	})
+	
+	
+	// describe('remove', () => {
+	// 	it('- existing tenant', done => {
+	// 		persistence.deleteTenant('kundra').then( () => {
+	// 			schema.Tenant.count({}, (err, count) => {
+	// 				if (err) expect(true).toBe(false)
+	// 				expect(count).toBe(1)
+	// 				done()
+	// 			})
+				
+	// 		})
+	// 		.catch( err => {
+	// 			if (err) expect(false).toBe(true)
+	// 			done()
+	// 		})
+	// 	})
+	// })
+	
 	
 
 })
