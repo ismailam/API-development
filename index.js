@@ -1,6 +1,7 @@
 'use strict';
 
 const tenantManager = require('./tenantManager.js');
+const userManager = require('./userManager.js');
 const restify = require('restify')
 const server = restify.createServer()
 const auth = require('./modules/authenticator');
@@ -75,7 +76,7 @@ server.post('/tenants', auth.isAuthenticated, (req, res) => {
 })
 
 
-server.put('/tenants/update', auth.isAuthenticated, (req, res) => {
+server.put('/tenants', auth.isAuthenticated, (req, res) => {
 	tenantManager.putTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST', 'PUT')
@@ -90,7 +91,7 @@ server.put('/tenants/update', auth.isAuthenticated, (req, res) => {
 	})
 })
 
-server.del('/tenants/delete', auth.isAuthenticated, (req, res) => {
+server.del('/tenants', auth.isAuthenticated, (req, res) => {
 	tenantManager.removeTenant(req, (err) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'DELETE')
@@ -111,9 +112,10 @@ server.del('/tenants/delete', auth.isAuthenticated, (req, res) => {
 
 
 
-//routing for users
+/********************************* 
+ *								routing for users ***********************/
 server.get('/users',  (req, res) =>{
-	tenantManager.showUsers((err, users) => {
+	userManager.showUsers((err, users) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		
@@ -133,7 +135,7 @@ server.get('/users',  (req, res) =>{
 
 
 server.post('/users', (req, res) => {
-	tenantManager.addUser(req, (err, data) => {
+	userManager.addUser(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST')
 		
@@ -148,6 +150,22 @@ server.post('/users', (req, res) => {
 })
 
 
+
+
+server.put('/users', (req, res) => {
+	userManager.putUser(req, (err, data) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'PUT')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.added, {user: data})
+		}
+		res.end()
+	})
+})
 
 
 

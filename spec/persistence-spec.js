@@ -90,29 +90,10 @@ describe('tenant collection', () => {
 					console.log(err);
 					expect(true).toBe(false)
 				} 
-				done()zur
+				done()
 			})
 		})
 	})
-	
-	
-	// describe('remove', () => {
-	// 	it('- existing tenant', done => {
-	// 		persistence.deleteTenant('kundra').then( () => {
-	// 			schema.Tenant.count({}, (err, count) => {
-	// 				if (err) expect(true).toBe(false)
-	// 				expect(count).toBe(1)
-	// 				done()
-	// 			})
-				
-	// 		})
-	// 		.catch( err => {
-	// 			if (err) expect(false).toBe(true)
-	// 			done()
-	// 		})
-	// 	})
-	// })
-	
-	
+
 
 })

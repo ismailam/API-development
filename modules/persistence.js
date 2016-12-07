@@ -2,11 +2,11 @@
 'use strict'
 
 const schema = require('../schema/schema');
-const userschema = require('../schema/userSchema');
+
 
 
 exports.getTenants = new Promise( (resolve, reject) => {
-	schema.Tenant.find( (err, tenants) => {
+	schema.Tenant.find({}, (err, tenants) => {
 		if (err) reject(new Error('database error'))
 		if (tenants.length) resolve(tenants) 
 		reject(new Error('No tenants'))
@@ -73,16 +73,6 @@ exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
 
 
 
-exports.Count = callback => {
-	schema.Tenant.count({}, (err, count) => {
-		if (err) {
-			callback(err)
-			
-		}
-		callback(null, count)
-	})
-}
-
 
 // exports.removeTenant = tenantName => new Promise( (resolve, reject) => {
 // 	console.log(`tenantName: ${tenantName}`)
@@ -95,31 +85,16 @@ exports.Count = callback => {
 // })
 
 
-
-
-/******************* post users  ****************************/
-/********************USER REGISTRATION *************************/
-exports.postUser = userInfo => new Promise( (resolve, reject) => {
-	const user = new userschema(userInfo)
-	
-	user.save( (err, userI) => {
+exports.Count = callback => {
+	schema.Tenant.count({}, (err, count) => {
 		if (err) {
-			reject(new Error('an error adding user to system'))
+			callback(err)
+			
 		}
-		resolve({message: 'Tenant successfully created!', userI})
+		callback(null, count)
 	})
-});
+}
 
-
-
-
-exports.getUsers = new Promise( (resolve, reject) =>  {
-	userschema.User.find((err, users) =>  {
-		if (err) reject(new Error('database error'))
-		if (users.length) resolve(users)
-		reject(new Error(`user doesnot exist`))
-  });
-});
 
 
 

@@ -3,11 +3,10 @@
 const persistence = require('./modules/persistence')
 const auth = require('./modules/authenticator');
 
-//' mansaray Ismail'
 
 //shows one tenant
 exports.showTenant = (callback) => {
-	persistence.getTenant('kundra')
+	persistence.getTenant('kwais')
 	.then(tenants => {
 		callback(null, tenants)
 	}).catch(err => {
@@ -64,44 +63,6 @@ exports.removeTenant = (callback) => {
 
 
 
-
-
-
-
-
-/* *************************** adds users and shows users *******************/
-//show users
-exports.showUsers = (callback)=> {
-	persistence.getUsers()
-	.then(users => {
-		callback(null, users)
-	}).catch(err => {
-		callback(err)
-	})
-	
-}
-
-
-
-
-//add users
-exports.addUser = (request, callback) => {
-	extractBodyKey(request, 'username').then( (username, password) => {
-		const userI= {
-			username: request.body.username,
-			password: request.body.password
-		}
-		console.log(userI);
-		return persistence.postUser(userI)
-	}).then( data => callback(null, data))
-	.catch( err => callback(err))
-}
-	
-	
-	
-	
-	
-	
 	
 
 /* *************************** helpwe functions *******************/    
