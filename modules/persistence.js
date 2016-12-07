@@ -99,3 +99,12 @@ exports.Count = callback => {
 
 
 
+//checks if tenant has payed 
+exports.isPayed = tenantName => new Promise( (resolve, reject) => {
+	schema.Tenant.find({name: tenantName}, (err, tenants) =>  {
+		if (err) reject(new Error('database error'))
+		if (!tenants.length) reject(new Error(`Tenant doesnot exist`))
+		if (tenants.isPayed != true) resolve (tenants)
+		
+  });
+})

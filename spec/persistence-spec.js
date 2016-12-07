@@ -2,7 +2,7 @@
 'use strict'
 /*istanbul ignore next*/
 /* global expect */
-
+/* global describe*/
 const persistence = require('../modules/persistence');
 const schema = require('../schema/schema');
 

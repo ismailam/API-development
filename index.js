@@ -21,7 +21,7 @@ const status = {
 const defaultPort = 8080;
 
 
-server.get('/', auth.isAuthenticated, (req, res) =>{
+server.get('/', /*auth.isAuthenticated,*/ (req, res) =>{
 	tenantManager.showTenant((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
@@ -39,7 +39,7 @@ server.get('/', auth.isAuthenticated, (req, res) =>{
 	
 })
 
-server.get('/tenants', auth.isAuthenticated, (req, res) =>{
+server.get('/tenants', /*auth.isAuthenticated,*/  (req, res) =>{
 	
 	tenantManager.showTenants((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
@@ -60,7 +60,7 @@ server.get('/tenants', auth.isAuthenticated, (req, res) =>{
 
 
 
-server.post('/tenants', auth.isAuthenticated, (req, res) => {
+server.post('/tenants', /*auth.isAuthenticated,*/  (req, res) => {
 	tenantManager.addTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST')
@@ -76,7 +76,7 @@ server.post('/tenants', auth.isAuthenticated, (req, res) => {
 })
 
 
-server.put('/tenants', auth.isAuthenticated, (req, res) => {
+server.put('/tenants',/*auth.isAuthenticated,*/  (req, res) => {
 	tenantManager.putTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST', 'PUT')
@@ -91,7 +91,7 @@ server.put('/tenants', auth.isAuthenticated, (req, res) => {
 	})
 })
 
-server.del('/tenants', auth.isAuthenticated, (req, res) => {
+server.del('/tenants', /*auth.isAuthenticated,*/  (req, res) => {
 	tenantManager.removeTenant(req, (err) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'DELETE')
