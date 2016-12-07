@@ -59,7 +59,7 @@ exports.distanceFromAgency = (agencyLocation, tenantsLocation) => new Promise( (
 })
 
 //direction to tenants from agency
-exports.getDirection = (agencyLocation, tenantsLocation) => new Promise( (resolve, reject) =>{
+exports.directionFromAgency = (agencyLocation, tenantsLocation) => new Promise( (resolve, reject) =>{
 	
 	const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${agencyLocation}&destination=${tenantsLocation}`;
 	console.log(url);

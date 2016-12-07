@@ -2,7 +2,7 @@
 
 const persistence = require('./modules/persistence')
 const auth = require('./modules/authenticator');
-
+const rand = require('csprng');
 
 //shows one tenant
 exports.showTenant = (callback) => {
@@ -27,8 +27,9 @@ exports.showTenants = (callback)=> {
 
 //add tenant
 exports.addTenant = (request, callback) => {
-	extractBodyKey(request, 'name').then( (name, location, age) => {
+	extractBodyKey(request, 'name').then( (tenantId, name, location, age) => {
 		const tenantI= {
+			tenantId: rand(130, 36),
 			name: request.body.name,
 			location: request.body.locations,
 			age: request.body.age,
