@@ -1,11 +1,11 @@
 // Load required packages
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
-const User = require('../schema/userSchema')
+const userschema = require('../schema/userSchema')
 
 passport.use(new BasicStrategy(
   function(username, password, callback) {
-    User.findOne({ username: username }, function (err, user) {
+    userschema.User.findOne({ username: username }, function (err, user) {
       if (err) { return callback(err); }
 
       // No user found with that username

@@ -6,7 +6,7 @@ const userschema = require('../schema/userSchema');
 /********************USER REGISTRATION *************************/
 
 exports.postUser = userInfo => new Promise( (resolve, reject) => {
-	const user = new userschema(userInfo)
+	const user = new userschema.User(userInfo)
 	
 	user.save( (err, userI) => {
 		if (err) {

@@ -6,7 +6,7 @@ const auth = require('./modules/authenticator');
 
 //shows one tenant
 exports.showTenant = (callback) => {
-	persistence.getTenant('kwais')
+	persistence.getTenant('kundra')
 	.then(tenants => {
 		callback(null, tenants)
 	}).catch(err => {
@@ -52,9 +52,10 @@ exports.putTenant = (request, callback) => {
 
 //deletes tenant
 exports.removeTenant = (callback) => {
-	persistence.deleteTenant()
-	.then(tenants => {
-		callback(null, tenants)
+	persistence.deleteTenant('amir')
+	.then(() => {
+		console.log('deleted')
+		return ('tenant deleted')
 	}).catch(err => {
 		callback(err)
 	})

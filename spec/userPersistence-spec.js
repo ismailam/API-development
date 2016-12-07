@@ -50,14 +50,15 @@ describe('user registration', () => {
 	describe('add', () => {
 		it('+ new user', done => {
 			const userI = {
-				username: 'wasa', 
-				password: 1689
+				username: 'jibrin', 
+				password: 68950,
+	 			
 				
 			}
 			userPersistence.postUser(userI).then( () => {
-				userSchema.User.count({}, (err, count) => {
+				userschema.User.count({}, (err, count) => {
 					if (err) expect(true).toBe(false)
-					expect(count).toBe(1)
+					expect(count).toBe(2)
 					done()
 				})
 				
@@ -76,7 +77,7 @@ describe('user registration', () => {
 		it(' modify user password', done => {
 			const password =  1906;
 			userPersistence.updatePassword('amir', password).then( () => {
-				schema.Tenant.count({}, (err, count) => {
+				userschema.User.count({}, (err, count) => {
 					if (err) expect(true).toBe(false)
 					expect(count).toBe(1)
 					done()

@@ -99,7 +99,6 @@ server.del('/tenants', auth.isAuthenticated, (req, res) => {
 		if (err) {
 			res.send(status.badRequest, {error: err.message})
 		} else {
-			
 			res.send(status.ok)
 		}
 		res.end()
