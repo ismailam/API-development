@@ -59,9 +59,6 @@ exports.updateTenant = (tenantName, tenantAge) => new Promise( (resolve, reject)
  })
 
 
-
-
-
 // exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
 // 	schema.Tenant.remove({name: tenantName}, (err) =>{
 // 		if (err) {
@@ -96,10 +93,7 @@ exports.Count = callback => {
 	})
 }
 
-
-
-
-//checks if tenant has payed 
+//checks if tenant has payed rent
 exports.isPayed = tenantName => new Promise( (resolve, reject) => {
 	schema.Tenant.find({name: tenantName}, (err, tenants) =>  {
 		if (err) reject(new Error('database error'))
@@ -108,3 +102,5 @@ exports.isPayed = tenantName => new Promise( (resolve, reject) => {
 		
   });
 })
+
+
