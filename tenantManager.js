@@ -1,6 +1,7 @@
 'use strict'
 
 const persistence = require('./modules/persistence')
+const location = require('./modules/location')
 const auth = require('./modules/authenticator');
 const rand = require('csprng');
 
@@ -61,6 +62,54 @@ exports.removeTenant = (callback) => {
 		callback(err)
 	})
 }
+
+
+
+/****************** additional features **
+ *											***show tenant location detailas ****************************/
+
+
+//details of tenants location
+exports.tenantsLocation = (callback)=> {
+	const locations = "CV1 5JQ";
+	location.getLocation(locations)
+	.then(tenantlocation => {
+		callback(null, tenantlocation)
+	}).catch(err => {
+		callback(err)
+	})
+}
+
+//shows tenants distance from agency
+exports.tenantsDistance = (callback)=> {
+	const agencyLocation = "CV1 5JQ";
+	const tenantsLocation = "CV1 5FB"
+	
+	location.distanceFromAgency(agencyLocation, tenantsLocation)
+	.then(tenantdistance => {
+		callback(null, tenantdistance)
+	}).catch(err => {
+		callback(err)
+	})
+}
+
+
+//shows tenants direction from agency
+exports.tenantsDirection = (callback)=> {
+	const agencyLocation = "CV1 5JQ";
+	const tenantsLocation = "CV1 5FB"
+	
+	location.directionFromAgency(agencyLocation, tenantsLocation)
+	.then(tenantdistance => {
+		callback(null, tenantdistance)
+	}).catch(err => {
+		callback(err)
+	})
+}
+
+
+
+
 
 
 

@@ -169,7 +169,45 @@ server.put('/users', (req, res) => {
 
 
 
+/************************* Tenant location 
+ *											Details****************************/
+ server.get('/location', /*auth.isAuthenticated,*/ (req, res) =>{
+	tenantManager.tenantsLocation((err, locationDetails) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.ok, locationDetails)
+		}
+		res.end()
+	})
+	
+	
+	
+})
 
+server.get('/distance', /*auth.isAuthenticated,*/ (req, res) =>{
+	tenantManager.tenantsDistance((err, distanceDetails) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.ok, distanceDetails)
+		}
+		res.end()
+	})
+	
+	
+	
+})
+
+ 
 
 const port = process.env.PORT || defaultPort
 

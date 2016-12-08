@@ -3,7 +3,7 @@
 const request = require('request');
 
 //shows tenants locations
-exports.tenantsLocation = location => new Promise( (resolve, reject) =>{
+exports.getLocation = location => new Promise( (resolve, reject) =>{
 	
 	const url = `https://maps.googleapis.com/maps/api/geocode/json?region=gb&units=metric&appid=44c39f3fa462f86b3fc88f5678e5c5ff&address=${location}`;
 	console.log(url);
@@ -39,16 +39,13 @@ exports.distanceFromAgency = (agencyLocation, tenantsLocation) => new Promise( (
 		if (err) {
 			reject(Error('failed to make API call'));
 		}
+		const json = JSON.parse(body);
 		
 		if (json.status === 'ZERO_RESULTS') {
 			reject(Error('no results found'));
 			
 		}
-		
-		const json = JSON.parse(body);
 		console.log(JSON.stringify(json, null, 2));
-		
-		
 		
 		resolve(json);
 		
