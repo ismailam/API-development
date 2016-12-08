@@ -167,6 +167,22 @@ server.put('/users', (req, res) => {
 })
 
 
+//delets users
+server.del('/users', /*auth.isAuthenticated,*/  (req, res) => {
+	userManager.removeUser(req, (err, data) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'DELETE')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			res.send(status.ok, data)
+		}
+		res.end()
+	})
+})
+
+
 
 
 /************************* Tenant location 

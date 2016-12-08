@@ -42,6 +42,14 @@ exports.putUser = (request, callback) => {
 }
 	
 	
+//deletes tenant
+exports.removeUser = (request, callback) => {
+	userPersistence.deleteUser('amir')
+	.then( data => callback(null, data))
+	.catch(err => {
+		callback(err)
+	})
+}
 
 
 
