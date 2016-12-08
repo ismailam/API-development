@@ -100,8 +100,8 @@ exports.tenantsDirection = (callback)=> {
 	const tenantsLocation = "CV1 5FB"
 	
 	location.directionFromAgency(agencyLocation, tenantsLocation)
-	.then(tenantdistance => {
-		callback(null, tenantdistance)
+	.then(tenantdirection => {
+		callback(null, tenantdirection)
 	}).catch(err => {
 		callback(err)
 	})

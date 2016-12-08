@@ -207,6 +207,24 @@ server.get('/distance', /*auth.isAuthenticated,*/ (req, res) =>{
 	
 })
 
+server.get('/direction', /*auth.isAuthenticated,*/ (req, res) =>{
+	tenantManager.tenantsDirection((err, directionDetails) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.ok, directionDetails)
+		}
+		res.end()
+	})
+	
+	
+	
+})
+
  
 
 const port = process.env.PORT || defaultPort
