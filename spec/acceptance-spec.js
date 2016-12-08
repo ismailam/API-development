@@ -24,9 +24,7 @@ frisby.create('Show correct tenant')
     .expectStatus(status.ok)
     .expectHeader('content-type', 'application/json')
     .expectJSON('?', {
-      name: "kundra",
-      age: 16,
-      location: "watford"
+      name: "kundra"
     })
 .toss();
 

@@ -15,14 +15,24 @@ exports.getLocation = location => new Promise( (resolve, reject) =>{
 		const json = JSON.parse(body);
 		//console.log(JSON.stringify(json, null, 2));
 		
-		console.log(json.long_name[0])
+		console.log(json.results[0].geometry.location)
 		
 		if (json.status === 'ZERO_RESULTS') {
 			reject(Error('no results found'));
 			
 		}
-		
-		resolve(json);
+			
+		const locationDetails= {
+			House_Number: json.results[0].address_components[0].long_name,
+			Street_Name: json.results[0].address_components[1].long_name,
+			City: json.results[0].address_components[2].long_name,
+			County: json.results[0].address_components[3].long_name,
+			Country: json.results[0].address_components[4].long_name,
+			Post_Code: json.results[0].address_components[6].long_name,
+			Location: json.results[0].geometry.location
+		}
+
+		resolve(locationDetails);
 		
 	});
 	
@@ -47,8 +57,9 @@ exports.distanceFromAgency = (agencyLocation, tenantsLocation) => new Promise( (
 			reject(Error('no results found'));
 			
 		}
-		console.log(JSON.stringify(json, null, 2));
-		
+		//console.log(JSON.stringify(json, null, 2));
+		//console.log(json.rows[0].elements[0].distance.text)
+	
 		resolve(json);
 		
 	});

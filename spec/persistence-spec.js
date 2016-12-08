@@ -160,6 +160,24 @@ describe('user registration', () => {
 			})
 		})
 	})
+	
+	
+	describe('remove', () => {
+		it('- existing user', done => {
+			userPersistence.deleteUser('amir').then( () => {
+				userschema.User.count({}, (err, count) => {
+					if (err) expect(true).toBe(false)
+					expect(count).toBe(0)
+					done()
+				})
+				
+			})
+			.catch( err => {
+				if (err) expect(true).toBe(false)
+				done()
+			})
+		})
+	})
 
 	describe('add', () => {
 		it('+ new user', done => {
@@ -209,22 +227,7 @@ describe('user registration', () => {
 	})
 	
 	
-	describe('remove', () => {
-		it('- existing user', done => {
-			userPersistence.deleteUser('amir').then( () => {
-				userschema.User.count({}, (err, count) => {
-					if (err) expect(true).toBe(false)
-					expect(count).toBe(0)
-					done()
-				})
-				
-			})
-			.catch( err => {
-				if (err) expect(true).toBe(false)
-				done()
-			})
-		})
-	})
+
 	
 	
 

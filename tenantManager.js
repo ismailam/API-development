@@ -73,7 +73,7 @@ exports.removeTenant = (request, callback) => {
 
 //details of tenants location
 exports.tenantsLocation = (callback)=> {
-	const locations = "CV1 5JQ";
+	const locations = " 7 Gilbert Close Coventry ";
 	location.getLocation(locations)
 	.then(tenantlocation => {
 		callback(null, tenantlocation)
@@ -84,8 +84,8 @@ exports.tenantsLocation = (callback)=> {
 
 //shows tenants distance from agency
 exports.tenantsDistance = (callback)=> {
-	const agencyLocation = "CV1 5JQ";
-	const tenantsLocation = "CV1 5FB"
+	const agencyLocation = "7 Gilbert Close Coventry";
+	const tenantsLocation = "3 Vecqueray St, Coventry "
 	
 	location.distanceFromAgency(agencyLocation, tenantsLocation)
 	.then(tenantdistance => {

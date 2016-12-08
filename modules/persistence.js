@@ -59,17 +59,6 @@ exports.updateTenant = (tenantName, tenantAge) => new Promise( (resolve, reject)
  })
 
 
-// exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
-// 	schema.Tenant.remove({name: tenantName}, (err) =>{
-// 		if (err) {
-//     			reject(new Error('an error deleting tenant data'))
-//      		}
-//      		resolve({ message: 'Tenant successfully deleted!'})
-// 	} )
-// })
-
-
-
 
 exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
 	console.log(`tenantName: ${tenantName}`)
