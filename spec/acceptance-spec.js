@@ -64,8 +64,7 @@ frisby.create('Show correct user')
     .expectStatus(status.ok)
     .expectHeader('content-type', 'application/json')
     .expectJSON('?', {
-      username: "amir",
-      password: "1906"
+      username: "amir"
       
     })
 .toss();

@@ -10,7 +10,7 @@
 6 info coverage @
 7 verbose unsafe-perm in lifecycle true
 8 info @ Failed to exec coverage script
-9 verbose stack Error: @ coverage: `istanbul cover -x **spec/** -x **index.js** -x **tenantManager.js** jasmine-node spec`
+9 verbose stack Error: @ coverage: `istanbul cover -x **spec/** -x **index.js** -x **tenantManager.js** ./node_modules/.bin/jasmine-node spec`
 9 verbose stack Exit status 1
 9 verbose stack     at EventEmitter.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.5.0/lib/node_modules/npm/lib/utils/lifecycle.js:217:16)
 9 verbose stack     at emitTwo (events.js:87:13)
@@ -27,13 +27,13 @@
 14 error node v4.5.0
 15 error npm  v2.15.9
 16 error code ELIFECYCLE
-17 error @ coverage: `istanbul cover -x **spec/** -x **index.js** -x **tenantManager.js** jasmine-node spec`
+17 error @ coverage: `istanbul cover -x **spec/** -x **index.js** -x **tenantManager.js** ./node_modules/.bin/jasmine-node spec`
 17 error Exit status 1
-18 error Failed at the @ coverage script 'istanbul cover -x **spec/** -x **index.js** -x **tenantManager.js** jasmine-node spec'.
+18 error Failed at the @ coverage script 'istanbul cover -x **spec/** -x **index.js** -x **tenantManager.js** ./node_modules/.bin/jasmine-node spec'.
 18 error This is most likely a problem with the  package,
 18 error not with npm itself.
 18 error Tell the author that this fails on your system:
-18 error     istanbul cover -x **spec/** -x **index.js** -x **tenantManager.js** jasmine-node spec
+18 error     istanbul cover -x **spec/** -x **index.js** -x **tenantManager.js** ./node_modules/.bin/jasmine-node spec
 18 error You can get information on how to open an issue for this project with:
 18 error     npm bugs
 18 error Or if that isn't available, you can get their info via:

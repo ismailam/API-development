@@ -56,3 +56,14 @@ exports.updatePassword = (userName, newPassword) => new Promise( (resolve, rejec
 
 
 
+exports.deleteUser = userName => new Promise( (resolve, reject) => {
+	console.log(`tenantName: ${userName}`)
+	userschema.User.find({username: userName}).remove( (err) => {
+		console.log('ERR')
+		console.log(err)
+
+		if (err) return reject(err)
+		resolve({ message: 'User successfully deleted!' })
+	})
+})
+

@@ -28,18 +28,21 @@ exports.showTenants = (callback)=> {
 
 //add tenant
 exports.addTenant = (request, callback) => {
-	extractBodyKey(request, 'name').then( (tenantId, name, location, age) => {
+	extractBodyKey(request, 'name').then( (tenantId, name, location, age, isPayed) => {
 		const tenantI= {
 			tenantId: rand(130, 36),
 			name: request.body.name,
 			location: request.body.locations,
 			age: request.body.age,
+			isPayed: request.body.isPayed
 		}
 		console.log(tenantI);
 		return persistence.postTenant(tenantI)
 	}).then( data => callback(null, data))
 	.catch( err => callback(err))
 }
+
+
 
 //update tenant	data 
 exports.putTenant = (request, callback) => {
@@ -53,15 +56,14 @@ exports.putTenant = (request, callback) => {
 }
 
 //deletes tenant
-exports.removeTenant = (callback) => {
-	persistence.deleteTenant('amir')
-	.then(() => {
-		console.log('deleted')
-		return ('tenant deleted')
-	}).catch(err => {
+exports.removeTenant = (request, callback) => {
+	persistence.deleteTenant('kundra')
+	.then( data => callback(null, data))
+	.catch(err => {
 		callback(err)
 	})
 }
+
 
 
 
@@ -107,11 +109,18 @@ exports.tenantsDirection = (callback)=> {
 	})
 }
 
+//shows users that have paid rent 
+exports.tenantIsPayed = (callback) => {
+	persistence.isPayed()
+	.then(tenants => {
+		callback(null, tenants)
+	}).catch(err => {
+		callback(err)
+	})
+} 
 
 
-
-
-
+/******************************************************************************/
 
 
 	

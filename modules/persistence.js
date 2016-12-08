@@ -71,16 +71,16 @@ exports.updateTenant = (tenantName, tenantAge) => new Promise( (resolve, reject)
 
 
 
-// exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
-// 	console.log(`tenantName: ${tenantName}`)
-// 	schema.Tenant.find({name: tenantName}).remove( (err) => {
-// 		console.log('ERR')
-// 		console.log(err)
+exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
+	console.log(`tenantName: ${tenantName}`)
+	schema.Tenant.find({name: tenantName}).remove( (err) => {
+		console.log('ERR')
+		console.log(err)
 
-// 		if (err) return reject(err)
-// 		resolve({ message: 'Tenant successfully deleted!', result })
-// 	})
-// })
+		if (err) return reject(err)
+		resolve({ message: 'Tenant successfully deleted!' })
+	})
+})
 
 
 exports.Count = callback => {
@@ -94,8 +94,8 @@ exports.Count = callback => {
 }
 
 //checks if tenant has payed rent
-exports.isPayed = tenantName => new Promise( (resolve, reject) => {
-	schema.Tenant.find({name: tenantName}, (err, tenants) =>  {
+exports.isPayed = new Promise( (resolve, reject) => {
+	schema.Tenant.find({}, (err, tenants) =>  {
 		if (err) reject(new Error('database error'))
 		if (!tenants.length) reject(new Error(`Tenant doesnot exist`))
 		if (tenants.isPayed != true) resolve (tenants)

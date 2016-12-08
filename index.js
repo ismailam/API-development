@@ -92,14 +92,14 @@ server.put('/tenants',/*auth.isAuthenticated,*/  (req, res) => {
 })
 
 server.del('/tenants', /*auth.isAuthenticated,*/  (req, res) => {
-	tenantManager.removeTenant(req, (err) => {
+	tenantManager.removeTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'DELETE')
 		
 		if (err) {
 			res.send(status.badRequest, {error: err.message})
 		} else {
-			res.send(status.ok)
+			res.send(status.ok, data)
 		}
 		res.end()
 	})
@@ -225,6 +225,24 @@ server.get('/direction', /*auth.isAuthenticated,*/ (req, res) =>{
 	
 })
 
+//payed tenants
+server.get('/tenantPayed', /*auth.isAuthenticated,*/ (req, res) =>{
+	tenantManager.tenantsDirection((err, payed) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.ok, payed)
+		}
+		res.end()
+	})
+	
+	
+	
+})
  
 
 const port = process.env.PORT || defaultPort
