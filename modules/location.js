@@ -57,10 +57,18 @@ exports.distanceFromAgency = (agencyLocation, tenantsLocation) => new Promise( (
 			reject(Error('no results found'));
 			
 		}
-		//console.log(JSON.stringify(json, null, 2));
-		//console.log(json.rows[0].elements[0].distance.text)
+		console.log(JSON.stringify(json, null, 2));
+		
+		const distanceDetails= {
+			Tenant_Address: json.destination_addresses[0],
+			Agency_Address: json.origin_addresses[0],
+			Distance: json.rows[0].elements[0].distance.text,
+			Duration: json.rows[0].elements[0].duration.text
+		}
+
+		
 	
-		resolve(json);
+		resolve(distanceDetails);
 		
 	});
 	
@@ -72,7 +80,7 @@ exports.distanceFromAgency = (agencyLocation, tenantsLocation) => new Promise( (
 exports.directionFromAgency = (agencyLocation, tenantsLocation) => new Promise( (resolve, reject) =>{
 	
 	const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${agencyLocation}&destination=${tenantsLocation}`;
-	console.log(url);
+	//console.log(url);
 	
 	request.get( url, (err, res, body) => {
 		
@@ -89,10 +97,10 @@ exports.directionFromAgency = (agencyLocation, tenantsLocation) => new Promise( 
 			
 		}
 		
-		console.log(JSON.stringify(json, null, 2));
+		//console.log(JSON.stringify(json, null, 2));
 		
 		
-		
+		console.log(json.destination_addresses[0])
 		
 		
 		resolve(json);
