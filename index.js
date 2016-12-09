@@ -21,7 +21,10 @@ const status = {
 const defaultPort = 8080;
 
 
-server.get('/', /*auth.isAuthenticated,*/ (req, res) =>{
+server.get('/t', /*auth.isAuthenticated,*/ (req, res) =>{
+	
+	//const tenantName = req.query.name;
+	
 	tenantManager.showTenant((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
@@ -260,6 +263,27 @@ server.get('/tenantPayed', /*auth.isAuthenticated,*/ (req, res) =>{
 	
 })
  
+ 
+server.get('/payed', /*auth.isAuthenticated,*/ (req, res) =>{
+	
+	//const tenantName = req.query.name;
+	
+	tenantManager.payed((err, tenants) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.ok, tenants)
+		}
+		res.end()
+	})
+	
+	
+	
+})
 
 const port = process.env.PORT || defaultPort
 

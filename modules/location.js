@@ -57,7 +57,7 @@ exports.distanceFromAgency = (agencyLocation, tenantsLocation) => new Promise( (
 			reject(Error('no results found'));
 			
 		}
-		console.log(JSON.stringify(json, null, 2));
+		
 		
 		const distanceDetails= {
 			Tenant_Address: json.destination_addresses[0],

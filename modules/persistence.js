@@ -5,8 +5,8 @@ const schema = require('../schema/schema');
 
 
 
-exports.getTenants = new Promise( (resolve, reject) => {
-	schema.Tenant.find({}, (err, tenants) => {
+exports.getTenants = tenantName => new Promise( (resolve, reject) => {
+	schema.Tenant.find({name: tenantName}, (err, tenants) => {
 		if (err) reject(new Error('database error'))
 		if (tenants.length) resolve(tenants) 
 		reject(new Error('No tenants'))
@@ -19,7 +19,11 @@ exports.getTenants = new Promise( (resolve, reject) => {
 exports.getTenant = tenantName => new Promise( (resolve, reject) =>{
 	schema.Tenant.find({name: tenantName}, (err, tenants) =>  {
 		if (err) reject(new Error('database error'))
-		if (tenants.length) resolve(tenants)
+		if (tenants.length){
+			console.log(tenants.age)
+			resolve(tenants)
+			
+		}
 		reject(new Error(`Tenant doesnot exist`))
   });
 });
@@ -83,11 +87,12 @@ exports.Count = callback => {
 }
 
 //checks if tenant has payed rent
-exports.isPayed = new Promise( (resolve, reject) => {
-	schema.Tenant.find({}, (err, tenants) =>  {
+exports.isPayed = payed => new Promise( (resolve, reject) => {
+	schema.Tenant.find({isPayed : payed}, (err, tenants) =>  {
 		if (err) reject(new Error('database error'))
 		if (!tenants.length) reject(new Error(`Tenant doesnot exist`))
-		if (tenants.isPayed != true) resolve (tenants)
+		resolve(tenants)
+	
 		
   });
 })

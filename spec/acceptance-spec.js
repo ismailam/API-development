@@ -20,7 +20,7 @@ const status = {
 // })
 
 frisby.create('Show correct tenant')
-    .get('https://api-development-ab-kwais.c9users.io/')
+    .get('https://api-development-ab-kwais.c9users.io/t')
     .expectStatus(status.ok)
     .expectHeader('content-type', 'application/json')
     .expectJSON('?', {
@@ -70,8 +70,8 @@ frisby.create('Show correct user')
 
 frisby.create('add a new user to system')
   .post('https://api-development-ab-kwais.c9users.io/users', {
-    username: "conor",
-    password: 4850
+    username: "yumt",
+    password: 7878
    
   }, {json: true})
   .expectHeaderContains('Content-Type', 'json')

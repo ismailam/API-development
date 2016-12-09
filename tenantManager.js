@@ -16,6 +16,17 @@ exports.showTenant = (callback) => {
 }
 
 
+//shows one tenant
+// exports.showTenant = (request, callback) => {
+	
+// 	persistence.getTenant()
+// 	.then(tenants => {
+// 		callback(null, tenants)
+// 	}).catch(err => {
+// 		callback(err)
+// 	})
+// }
+
 //shows tenant
 exports.showTenants = (callback)=> {
 	persistence.getTenant()
@@ -110,8 +121,8 @@ exports.tenantsDirection = (callback)=> {
 }
 
 //shows users that have paid rent 
-exports.tenantIsPayed = (callback) => {
-	persistence.isPayed()
+exports.payed = (callback) => {
+	persistence.isPayed(true)
 	.then(tenants => {
 		callback(null, tenants)
 	}).catch(err => {
