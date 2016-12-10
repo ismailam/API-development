@@ -1,7 +1,7 @@
 'use strict'
 
 const persistence = require('./modules/persistence')
-const location = require('./modules/location')
+const locations = require('./modules/location')
 const auth = require('./modules/authenticator');
 const rand = require('csprng');
 
@@ -37,13 +37,17 @@ exports.showTenants = (callback)=> {
 	})
 }
 
-//add tenant
+// //add tenant
 exports.addTenant = (request, callback) => {
-	extractBodyKey(request, 'name').then( (tenantId, name, location, age, isPayed) => {
+	extractBodyKey(request, 'name')
+	.then(()=>{
+		return locations.getLocation('7 gilbert close coventry');
+	})
+	.then( (locations, tenantId, name, age, isPayed) => {
 		const tenantI= {
 			tenantId: rand(130, 36),
 			name: request.body.name,
-			location: request.body.locations,
+			location: locations,
 			age: request.body.age,
 			isPayed: request.body.isPayed
 		}
@@ -52,6 +56,27 @@ exports.addTenant = (request, callback) => {
 	}).then( data => callback(null, data))
 	.catch( err => callback(err))
 }
+
+
+// // //add tenant
+// exports.addTenant = (request, callback) => {
+// 	extractBodyKey(request, 'name').then( (tenantId, name, location, age, isPayed) => {
+// 		const tenantI= {
+// 			tenantId: rand(130, 36),
+// 			name: request.body.name,
+// 			location: locations.getLocation(request.body.locations),
+// 			age: request.body.age,
+// 			isPayed: request.body.isPayed
+		
+// 		}
+// 		console.log(tenantI);
+// 		return persistence.postTenant(tenantI)
+// 	})
+// 	.then( data => callback(null, data))
+// 	.catch( err => callback(err))
+// }
+
+
 
 
 
@@ -82,10 +107,22 @@ exports.removeTenant = (request, callback) => {
  *											***show tenant location detailas ****************************/
 
 
+// //details of tenants location
+// exports.tenantsLocation = (callback)=> {
+// 	const locations = " 7 Gilbert Close Coventry ";
+// 	locations.getLocation(locations)
+// 	.then(tenantlocation => {
+// 		callback(null, tenantlocation)
+// 	}).catch(err => {
+// 		callback(err)
+// 	})
+// }
+
+
 //details of tenants location
-exports.tenantsLocation = (callback)=> {
-	const locations = " 7 Gilbert Close Coventry ";
-	location.getLocation(locations)
+exports.tenantsLocation = (request, callback)=> {
+	
+	locations.getLocation(request.body.locations)
 	.then(tenantlocation => {
 		callback(null, tenantlocation)
 	}).catch(err => {
@@ -98,7 +135,7 @@ exports.tenantsDistance = (callback)=> {
 	const agencyLocation = "7 Gilbert Close Coventry";
 	const tenantsLocation = "3 Vecqueray St, Coventry "
 	
-	location.distanceFromAgency(agencyLocation, tenantsLocation)
+	locations.distanceFromAgency(agencyLocation, tenantsLocation)
 	.then(tenantdistance => {
 		callback(null, tenantdistance)
 	}).catch(err => {
@@ -112,7 +149,7 @@ exports.tenantsDirection = (callback)=> {
 	const agencyLocation = "CV1 5JQ";
 	const tenantsLocation = "CV1 5FB"
 	
-	location.directionFromAgency(agencyLocation, tenantsLocation)
+	locations.directionFromAgency(agencyLocation, tenantsLocation)
 	.then(tenantdirection => {
 		callback(null, tenantdirection)
 	}).catch(err => {

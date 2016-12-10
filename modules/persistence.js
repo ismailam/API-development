@@ -5,10 +5,14 @@ const schema = require('../schema/schema');
 
 
 
-exports.getTenants = tenantName => new Promise( (resolve, reject) => {
-	schema.Tenant.find({name: tenantName}, (err, tenants) => {
+exports.getTenants  = new Promise( (resolve, reject) => {
+	schema.Tenant.find({}, (err, tenants) => {
 		if (err) reject(new Error('database error'))
-		if (tenants.length) resolve(tenants) 
+		if (tenants.length) {
+			console.log(tenants.length)
+			resolve(tenants) 
+			
+		}
 		reject(new Error('No tenants'))
 		
 	})
@@ -20,7 +24,8 @@ exports.getTenant = tenantName => new Promise( (resolve, reject) =>{
 	schema.Tenant.find({name: tenantName}, (err, tenants) =>  {
 		if (err) reject(new Error('database error'))
 		if (tenants.length){
-			console.log(tenants.age)
+			console.log(tenants.length)
+			console.log(tenants[0].age)
 			resolve(tenants)
 			
 		}
