@@ -168,6 +168,18 @@ exports.payed = (callback) => {
 } 
 
 
+//shows users that have not paid for rent 
+exports.notPayed = (callback) => {
+	persistence.isPayed(false)
+	.then(tenants => {
+		callback(null, tenants)
+	}).catch(err => {
+		callback(err)
+	})
+} 
+
+
+
 /******************************************************************************/
 
 

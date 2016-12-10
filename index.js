@@ -245,8 +245,8 @@ server.get('/direction', /*auth.isAuthenticated,*/ (req, res) =>{
 })
 
 //payed tenants
-server.get('/tenantPayed', /*auth.isAuthenticated,*/ (req, res) =>{
-	tenantManager.tenantsDirection((err, payed) => {
+server.get('/tenants/direction', /*auth.isAuthenticated,*/ (req, res) =>{
+	tenantManager.tenantsDirection((err, direction) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		
@@ -254,7 +254,7 @@ server.get('/tenantPayed', /*auth.isAuthenticated,*/ (req, res) =>{
 			res.send(status.badRequest, {error: err.message})
 		} else {
 			
-			res.send(status.ok, payed)
+			res.send(status.ok, direction)
 		}
 		res.end()
 	})
@@ -263,12 +263,35 @@ server.get('/tenantPayed', /*auth.isAuthenticated,*/ (req, res) =>{
 	
 })
  
+
+
  
 server.get('/payed', /*auth.isAuthenticated,*/ (req, res) =>{
 	
 	//const tenantName = req.query.name;
 	
 	tenantManager.payed((err, tenants) => {
+		res.setHeader('content-type', 'application/json')
+		res.setHeader('accepts', 'GET')
+		
+		if (err) {
+			res.send(status.badRequest, {error: err.message})
+		} else {
+			
+			res.send(status.ok, tenants)
+		}
+		res.end()
+	})
+	
+	
+	
+})
+
+server.get('/notPayed', /*auth.isAuthenticated,*/ (req, res) =>{
+	
+	//const tenantName = req.query.name;
+	
+	tenantManager.notPayed((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		
