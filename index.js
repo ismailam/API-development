@@ -28,6 +28,7 @@ server.get('/t', /*auth.isAuthenticated,*/ (req, res) =>{
 	tenantManager.showTenant((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
+		res.setHeader('accept-language', 'en-GB')
 		
 		if (err) {
 			res.send(status.badRequest, {error: err.message})
@@ -47,6 +48,7 @@ server.get('/tenants', /*auth.isAuthenticated,*/  (req, res) =>{
 	tenantManager.showTenants((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
+		res.setHeader('accept-language', 'en-GB')
 		
 		if (err) {
 			res.send(status.badRequest, {error: err.message})
@@ -66,7 +68,8 @@ server.get('/tenants', /*auth.isAuthenticated,*/  (req, res) =>{
 server.post('/tenants', /*auth.isAuthenticated,*/  (req, res) => {
 	tenantManager.addTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
-		res.setHeader('accepts', 'GET, POST')
+		res.setHeader('accepts', 'GET, POST'),
+		res.setHeader('date', new Date())
 		
 		if (err) {
 			res.send(status.badRequest, {error: err.message})
@@ -226,42 +229,6 @@ server.get('/distance', /*auth.isAuthenticated,*/ (req, res) =>{
 	
 })
 
-server.get('/direction', /*auth.isAuthenticated,*/ (req, res) =>{
-	tenantManager.tenantsDirection((err, directionDetails) => {
-		res.setHeader('content-type', 'application/json')
-		res.setHeader('accepts', 'GET')
-		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.ok, directionDetails)
-		}
-		res.end()
-	})
-	
-	
-	
-})
-
-//payed tenants
-server.get('/tenants/direction', /*auth.isAuthenticated,*/ (req, res) =>{
-	tenantManager.tenantsDirection((err, direction) => {
-		res.setHeader('content-type', 'application/json')
-		res.setHeader('accepts', 'GET')
-		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.ok, direction)
-		}
-		res.end()
-	})
-	
-	
-	
-})
  
 
 

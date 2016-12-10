@@ -76,41 +76,5 @@ exports.distanceFromAgency = (agencyLocation, tenantsLocation) => new Promise( (
 	
 })
 
-//direction to tenants from agency
-exports.directionFromAgency = (agencyLocation, tenantsLocation) => new Promise( (resolve, reject) =>{
-	
-	const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${agencyLocation}&destination=${tenantsLocation}`;
-	//console.log(url);
-	
-	request.get( url, (err, res, body) => {
-		
-	
-		if (err) {
-			reject(Error('failed to make API call'));
-		}
-		
-		const json = JSON.parse(body);
-		
-		
-		if (json.status === 'ZERO_RESULTS') {
-			reject(Error('no results found'));
-			
-		}
-		
-		//console.log(JSON.stringify(json, null, 2));
-		
-		
-		console.log(json.destination_addresses[0])
-		
-		
-		resolve(json);
-		
-	});
-	
-	
-	
-})
-
-
 
 

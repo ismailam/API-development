@@ -7,7 +7,7 @@ const rand = require('csprng');
 
 //shows one tenant
 exports.showTenant = (callback) => {
-	persistence.getTenant('kundra')
+	persistence.getTenant('salma')
 	.then(tenants => {
 		callback(null, tenants)
 	}).catch(err => {
@@ -41,42 +41,31 @@ exports.showTenants = (callback)=> {
 exports.addTenant = (request, callback) => {
 	extractBodyKey(request, 'name')
 	.then(()=>{
-		return locations.getLocation('7 gilbert close coventry');
+		return locations.getLocation(request.body.locations);
 	})
-	.then( (locations, tenantId, name, age, isPayed) => {
+	// .then((tenants)=> {
+	// 	const tenantLocation = request.body.locations;
+	// 	const agencyLocation = "3 Vecqueray St, Coventry";
+	// 	return locations.distanceFromAgency(agencyLocation, tenantLocation)
+		
+	// })
+
+	.then( (locations,tenantId, name, age, isPayed) => {
 		const tenantI= {
 			tenantId: rand(130, 36),
 			name: request.body.name,
-			location: locations,
 			age: request.body.age,
-			isPayed: request.body.isPayed
+			isPayed: request.body.isPayed,
+			location: locations,
+			added: new Date()
 		}
+	
+
 		console.log(tenantI);
 		return persistence.postTenant(tenantI)
 	}).then( data => callback(null, data))
 	.catch( err => callback(err))
 }
-
-
-// // //add tenant
-// exports.addTenant = (request, callback) => {
-// 	extractBodyKey(request, 'name').then( (tenantId, name, location, age, isPayed) => {
-// 		const tenantI= {
-// 			tenantId: rand(130, 36),
-// 			name: request.body.name,
-// 			location: locations.getLocation(request.body.locations),
-// 			age: request.body.age,
-// 			isPayed: request.body.isPayed
-		
-// 		}
-// 		console.log(tenantI);
-// 		return persistence.postTenant(tenantI)
-// 	})
-// 	.then( data => callback(null, data))
-// 	.catch( err => callback(err))
-// }
-
-
 
 
 
@@ -85,6 +74,7 @@ exports.putTenant = (request, callback) => {
 	extractBodyKey(request, 'age').then( () => {
 		
 		const age = request.body.age
+	
 		
 		return persistence.updateTenant('kundra', age)
 	}).then( data => callback(null, data))
@@ -107,16 +97,16 @@ exports.removeTenant = (request, callback) => {
  *											***show tenant location detailas ****************************/
 
 
-// //details of tenants location
-// exports.tenantsLocation = (callback)=> {
-// 	const locations = " 7 Gilbert Close Coventry ";
-// 	locations.getLocation(locations)
-// 	.then(tenantlocation => {
-// 		callback(null, tenantlocation)
-// 	}).catch(err => {
-// 		callback(err)
-// 	})
-// }
+//details of tenants location
+exports.tenantsLocation = (callback)=> {
+	const locations = " 7 Gilbert Close Coventry ";
+	locations.getLocation(locations)
+	.then(tenantlocation => {
+		callback(null, tenantlocation)
+	}).catch(err => {
+		callback(err)
+	})
+}
 
 
 //details of tenants location
@@ -131,9 +121,9 @@ exports.tenantsLocation = (request, callback)=> {
 }
 
 //shows tenants distance from agency
-exports.tenantsDistance = (callback)=> {
+function tenantsDistance (request, callback) {
 	const agencyLocation = "7 Gilbert Close Coventry";
-	const tenantsLocation = "3 Vecqueray St, Coventry "
+	const tenantsLocation = request.body.locations
 	
 	locations.distanceFromAgency(agencyLocation, tenantsLocation)
 	.then(tenantdistance => {
@@ -144,18 +134,6 @@ exports.tenantsDistance = (callback)=> {
 }
 
 
-//shows tenants direction from agency
-exports.tenantsDirection = (callback)=> {
-	const agencyLocation = "CV1 5JQ";
-	const tenantsLocation = "CV1 5FB"
-	
-	locations.directionFromAgency(agencyLocation, tenantsLocation)
-	.then(tenantdirection => {
-		callback(null, tenantdirection)
-	}).catch(err => {
-		callback(err)
-	})
-}
 
 //shows users that have paid rent 
 exports.payed = (callback) => {
