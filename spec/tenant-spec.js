@@ -5,7 +5,7 @@
 /*istanbul ignore next*/
 /* global expect */
 /* global describe*/
-const persistence = require('../modules/persistence');
+const persistence = require('../modules/tenant');
 const schema = require('../schema/schema');
 
 

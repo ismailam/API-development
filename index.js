@@ -1,7 +1,6 @@
 'use strict';
 
-const tenantManager = require('./tenantManager.js');
-const userManager = require('./userManager.js');
+const Manager = require('./Manager.js');
 const restify = require('restify')
 const server = restify.createServer()
 const auth = require('./modules/authenticator');
@@ -15,98 +14,74 @@ server.use(restify.authorizationParser())
 const status = {
 	ok: 200,
 	added: 201,
+	deleted: 204,
 	badRequest: 400,
 	unauthorised: 401
 }
 const defaultPort = 8080;
 
 
-server.get('/t', /*auth.isAuthenticated,*/ (req, res) =>{
+server.get('/tenant', /*auth.isAuthenticated,*/ (req, res) =>{
 	
-	//const tenantName = req.query.name;
-	
-	tenantManager.showTenant((err, tenants) => {
+	Manager.showTenant((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		res.setHeader('accept-language', 'en-GB')
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.ok, tenants)
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.ok, tenants)
 		res.end()
 	})
-	
-	
-	
 })
 
 server.get('/tenants', /*auth.isAuthenticated,*/  (req, res) =>{
-	
-	tenantManager.showTenants((err, tenants) => {
+	Manager.showTenants((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		res.setHeader('accept-language', 'en-GB')
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.ok, tenants)
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.ok, tenants)
 		res.end()
 	})
-	
-	
-	
 })
 
 
 
 server.post('/tenants', /*auth.isAuthenticated,*/  (req, res) => {
-	tenantManager.addTenant(req, (err, data) => {
+	Manager.addTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST'),
-		res.setHeader('date', new Date())
+		res.setHeader('accept-language', 'en-GB')
+		res.setHeader('added', new Date())
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.added, {tenant: data})
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.added, {tenant: data})
 		res.end()
 	})
 })
 
 
 server.put('/tenants',/*auth.isAuthenticated,*/  (req, res) => {
-	tenantManager.putTenant(req, (err, data) => {
+	Manager.putTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST', 'PUT')
+		res.setHeader('accept-language', 'en-GB')
+		res.setHeader('last-modified', new Date())
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.added, {tenant: data})
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.ok, {tenant: data})
 		res.end()
 	})
 })
 
 server.del('/tenants', /*auth.isAuthenticated,*/  (req, res) => {
-	tenantManager.removeTenant(req, (err, data) => {
+	Manager.removeTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'DELETE')
-		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			res.send(status.ok, data)
-		}
+		res.setHeader('accept-language', 'en-GB')
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.deleted, data)
 		res.end()
 	})
 })
@@ -120,36 +95,29 @@ server.del('/tenants', /*auth.isAuthenticated,*/  (req, res) => {
 /********************************* 
  *								routing for users ***********************/
 server.get('/users',  (req, res) =>{
-	userManager.showUsers((err, users) => {
+	Manager.showUsers((err, users) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
+		res.setHeader('accept-language', 'en-GB')
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.ok, users)
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.ok, users)
 		res.end()
 	})
-	
-	
 })
 
 
 
 
 server.post('/users', (req, res) => {
-	userManager.addUser(req, (err, data) => {
+	Manager.addUser(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST')
+		res.setHeader('accept-language', 'en-GB')
+		res.setHeader('added', new Date())
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.added, {user: data})
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.added, {user: data})
 		res.end()
 	})
 })
@@ -158,16 +126,14 @@ server.post('/users', (req, res) => {
 
 
 server.put('/users', (req, res) => {
-	userManager.putUser(req, (err, data) => {
+	Manager.putUser(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'PUT')
+		res.setHeader('accept-language', 'en-GB')
+		res.setHeader('last-modified', new Date())
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.added, {user: data})
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.ok, {user: data})
 		res.end()
 	})
 })
@@ -175,15 +141,13 @@ server.put('/users', (req, res) => {
 
 //delets users
 server.del('/users', /*auth.isAuthenticated,*/  (req, res) => {
-	userManager.removeUser(req, (err, data) => {
+	Manager.removeUser(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'DELETE')
+		res.setHeader('accept-language', 'en-GB')
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			res.send(status.ok, data)
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.ok, data)
 		res.end()
 	})
 })
@@ -194,39 +158,25 @@ server.del('/users', /*auth.isAuthenticated,*/  (req, res) => {
 /************************* Tenant location 
  *											Details****************************/
  server.get('/location', /*auth.isAuthenticated,*/ (req, res) =>{
-	tenantManager.tenantsLocation((err, locationDetails) => {
+	Manager.tenantsLocation((err, locationDetails) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.ok, locationDetails)
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.ok, locationDetails)
 		res.end()
 	})
-	
-	
-	
 })
 
 server.get('/distance', /*auth.isAuthenticated,*/ (req, res) =>{
-	tenantManager.tenantsDistance((err, distanceDetails) => {
+	Manager.tenantsDistance((err, distanceDetails) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.ok, distanceDetails)
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.ok, distanceDetails)
 		res.end()
 	})
-	
-	
-	
 })
 
  
@@ -237,52 +187,34 @@ server.get('/payed', /*auth.isAuthenticated,*/ (req, res) =>{
 	
 	//const tenantName = req.query.name;
 	
-	tenantManager.payed((err, tenants) => {
+	Manager.payed((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
+		res.setHeader('accept-language', 'en-GB')
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.ok, tenants)
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.ok, tenants)
 		res.end()
 	})
-	
-	
-	
 })
 
 server.get('/notPayed', /*auth.isAuthenticated,*/ (req, res) =>{
-	
-	//const tenantName = req.query.name;
-	
-	tenantManager.notPayed((err, tenants) => {
+	Manager.notPayed((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
+		res.setHeader('accept-language', 'en-GB')
 		
-		if (err) {
-			res.send(status.badRequest, {error: err.message})
-		} else {
-			
-			res.send(status.ok, tenants)
-		}
+		if (err) res.send(status.badRequest, {error: err.message})
+		else res.send(status.ok, tenants)
 		res.end()
 	})
-	
-	
-	
 })
 
 const port = process.env.PORT || defaultPort
 
 server.listen(port, err => {
-	if (err) {
-		console.error(err)
-	} else {
-		console.log('App is ready at : ' + port)
-	}
+	if (err) console.error(err)
+	else console.log('App is ready at : ' + port)
 })
 
 

@@ -1,9 +1,12 @@
 'use strict'
 
-const persistence = require('./modules/persistence')
+const persistence = require('./modules/tenant')
+const userPersistence = require('./modules/user')
 const locations = require('./modules/location')
 const auth = require('./modules/authenticator');
 const rand = require('csprng');
+
+
 
 //shows one tenant
 exports.showTenant = (callback) => {
@@ -16,20 +19,10 @@ exports.showTenant = (callback) => {
 }
 
 
-//shows one tenant
-// exports.showTenant = (request, callback) => {
-	
-// 	persistence.getTenant()
-// 	.then(tenants => {
-// 		callback(null, tenants)
-// 	}).catch(err => {
-// 		callback(err)
-// 	})
-// }
 
-//shows tenant
+//shows tenants
 exports.showTenants = (callback)=> {
-	persistence.getTenant()
+	persistence.getTenants()
 	.then(tenants => {
 		callback(null, tenants)
 	}).catch(err => {
@@ -59,8 +52,6 @@ exports.addTenant = (request, callback) => {
 			location: locations,
 			added: new Date()
 		}
-	
-
 		console.log(tenantI);
 		return persistence.postTenant(tenantI)
 	}).then( data => callback(null, data))
@@ -72,10 +63,7 @@ exports.addTenant = (request, callback) => {
 //update tenant	data 
 exports.putTenant = (request, callback) => {
 	extractBodyKey(request, 'age').then( () => {
-		
 		const age = request.body.age
-	
-		
 		return persistence.updateTenant('kundra', age)
 	}).then( data => callback(null, data))
 	.catch( err => callback(err))
@@ -93,25 +81,10 @@ exports.removeTenant = (request, callback) => {
 
 
 
-/****************** additional features **
- *											***show tenant location detailas ****************************/
-
-
-//details of tenants location
-exports.tenantsLocation = (callback)=> {
-	const locations = " 7 Gilbert Close Coventry ";
-	locations.getLocation(locations)
-	.then(tenantlocation => {
-		callback(null, tenantlocation)
-	}).catch(err => {
-		callback(err)
-	})
-}
-
+/****************** additional features ****************************************************/
 
 //details of tenants location
 exports.tenantsLocation = (request, callback)=> {
-	
 	locations.getLocation(request.body.locations)
 	.then(tenantlocation => {
 		callback(null, tenantlocation)
@@ -121,7 +94,7 @@ exports.tenantsLocation = (request, callback)=> {
 }
 
 //shows tenants distance from agency
-function tenantsDistance (request, callback) {
+exports.tenantsDistance = (request, callback) => {
 	const agencyLocation = "7 Gilbert Close Coventry";
 	const tenantsLocation = request.body.locations
 	
@@ -158,10 +131,70 @@ exports.notPayed = (callback) => {
 
 
 
-/******************************************************************************/
+/********************** 		MANAGING USER 
+											REGISTRATION **************************************/
+
+
+//show users
+exports.showUsers = (callback)=> {
+	userPersistence.getUsers("amir").then(user => {
+		callback(null, user)
+	}).catch(err => {
+		callback(err)
+	})
+	
+}
+
+
+//add users
+exports.addUser = (request, callback) => {
+	extractBodyKey(request, 'username').then( (username, password) => {
+		const userI= {
+			username: request.body.username,
+			password: request.body.password
+		}
+		console.log(userI);
+		return userPersistence.postUser(userI)
+	}).then( data => callback(null, data))
+	.catch( err => callback(err))
+}
+	
+
+//update user
+exports.putUser = (request, callback) => {
+	extractBodyKey(request, 'password').then( () => {
+		const password = request.body.password
+		return userPersistence.updatePassword('amir', password)
+	}).then( data => callback(null, data))
+	.catch( err => callback(err))
+}
+	
+	
+//deletes tenant
+exports.removeUser = (request, callback) => {
+	userPersistence.deleteUser('amir')
+	.then( data => callback(null, data))
+	.catch(err => {
+		callback(err)
+	})
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	
+
 
 /* *************************** helpwe functions *******************/    
 //helper functions

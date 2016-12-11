@@ -1,9 +1,10 @@
 {
   "scripts": {
     "test": "node_modules/.bin/jasmine-node spec --color --verbose --noStack --autotest --watch .",
-    "coverage": "./node_modules/.bin/istanbul cover -x **index.js** -x **spec/persistence-spec.js** -x **schema.js** ./node_modules/.bin/jasmine spec/persistence-spec.js"
+    "coverage": "./node_modules/.bin/istanbul cover -x **index.js** -x **spec/tenant-spec.js** -x **schema.js** ./node_modules/.bin/jasmine spec/tenant-spec.js"
   },
   "devDependencies": {
+    "eslint": "^3.12.0",
     "istanbul": "^0.4.0",
     "jasmine": "^2.5.2",
     "jasmine-node": "^1.14.5",
