@@ -1,10 +1,10 @@
 'use strict'
 
-const request = require('request');
+const request = require('request')
 
 //shows tenants locations
-exports.getLocation = location => new Promise( (resolve, reject) =>{
-	const url = `https://maps.googleapis.com/maps/api/geocode/json?region=gb&units=metric&appid=44c39f3fa462f86b3fc88f5678e5c5ff&address=${location}`;
+exports.getLocation = location => new Promise( (resolve, reject) => {
+	const url = `https://maps.googleapis.com/maps/api/geocode/json?region=gb&units=metric&appid=44c39f3fa462f86b3fc88f5678e5c5ff&address=${location}`
 	
 	request.get( url, (err, res, body) => {
 		if (err) reject(Error('invalid location: could not find'));

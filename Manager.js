@@ -3,7 +3,6 @@
 const persistence = require('./modules/tenant')
 const userPersistence = require('./modules/user')
 const locations = require('./modules/location')
-const auth = require('./modules/authenticator');
 const rand = require('csprng');
 
 
@@ -83,15 +82,6 @@ exports.removeTenant = (request, callback) => {
 
 /****************** additional features ****************************************************/
 
-//details of tenants location
-exports.tenantsLocation = (request, callback)=> {
-	locations.getLocation(request.body.locations)
-	.then(tenantlocation => {
-		callback(null, tenantlocation)
-	}).catch(err => {
-		callback(err)
-	})
-}
 
 //shows tenants distance from agency
 exports.tenantsDistance = (request, callback) => {
@@ -178,22 +168,6 @@ exports.removeUser = (request, callback) => {
 		callback(err)
 	})
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 
 
 /* *************************** helpwe functions *******************/    

@@ -20,6 +20,7 @@ const Schema = mongoose.Schema
 // create a schema
 const tenantSchema = new Schema({
 	tenantId: String,
+	userId: String,
 	name: String,
 	age: Number,
 	Email: String,
