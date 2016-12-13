@@ -28,7 +28,7 @@ exports.updatePassword = (userName, newPassword) => new Promise( (resolve, rejec
 		resolve({ message: 'user updated!', doc })
 	})
  })
- 
+
 //delete User account
 exports.deleteUser = userName => new Promise( (resolve, reject) => {
 	userschema.User.find({username: userName}).remove( (err) => {

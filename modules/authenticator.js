@@ -1,13 +1,14 @@
 // Load required packages
-var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
+
+'use strict'
+const passport = require('passport')
+const BasicStrategy = require('passport-http').BasicStrategy
 const userschema = require('../schema/userSchema')
 
 passport.use(new BasicStrategy(
   function(username, password, callback) {
-    userschema.User.findOne({ username: username }, function (err, user) {
-      
-      if (err) { return callback(err); }
+    userschema.User.findOne({ username: username }, (err, user) => {
+        if (err) { return callback(err); }
       // No user found with that username
       if (!user) { return callback(null, false); } 
 
@@ -28,3 +29,9 @@ passport.use(new BasicStrategy(
 exports.isAuthenticated = passport.authenticate('basic', { session : false });
 
 
+
+	// .then((tenants)=> {
+	// 	const tenantLocation = request.body.locations;
+	// 	const agencyLocation = "3 Vecqueray St, Coventry";
+	// 	return locations.distanceFromAgency(agencyLocation, tenantLocation)
+	// })

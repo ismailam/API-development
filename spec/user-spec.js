@@ -1,4 +1,3 @@
-
 'use strict'
 /*istanbul ignore next*/
 /* global expect */
@@ -7,14 +6,11 @@
 const userPersistence = require('../modules/user')
 const userschema = require('../schema/userSchema')
 
-
-describe('user registration', () => {
+describe('user collection', () => {
 	beforeEach( done => {
 		userschema.User.remove({}, err => {
 			if (err) expect(true).toBe(false)
-			const userI = {
-				username: 'amir', password: 4890
-			}
+			const userI = {username: 'kundra', password: 'huynb'}
 
 			new userschema.User(userI).save( (err, user) => {
 				if (err) expect(true).toBe(false)
@@ -24,36 +20,38 @@ describe('user registration', () => {
 					done()
 				})
 			})
+
 		})
 	})
-
+	
 	describe('get', () => {
-		it(' show user', done => {
-			userPersistence.getUsers('amir').then( () => {
+		it(' show User', done => {
+			userPersistence.getUsers('kundra').then( () => {
 				userschema.User.count({}, (err, count) => {
 					if (err) expect(true).toBe(false)
 					expect(count).toBe(1)
 					done()
 				})
-			})
-			.catch( err => {
-				if (err){
-					console.log(err)
-					expect(true).toBe(false)
-				}
-				done()
-			})
-		})
-	})
 
+			})
+		.catch( err => {
+			if (err) expect(true).toBe(false)
+			done()
+
+		})
+		})
+
+	})
+	
 	describe('remove', () => {
 		it('- existing user', done => {
-			userPersistence.deleteUser('amir').then( () => {
+			userPersistence.deleteUser('kundra').then( () => {
 				userschema.User.count({}, (err, count) => {
 					if (err) expect(true).toBe(false)
 					expect(count).toBe(0)
 					done()
 				})
+
 			})
 			.catch( err => {
 				if (err) expect(true).toBe(false)
@@ -61,11 +59,10 @@ describe('user registration', () => {
 			})
 		})
 	})
-
+	
 	describe('add', () => {
 		it('+ new user', done => {
-			const userI = { username: 'jibrin', password: 68950,
-			}
+			const userI = {username: 'jafru', password: 'coventry'}
 
 			userPersistence.postUser(userI).then( () => {
 				userschema.User.count({}, (err, count) => {
@@ -73,6 +70,7 @@ describe('user registration', () => {
 					expect(count).toBe(2)
 					done()
 				})
+
 			})
 			.catch( err => {
 				if (err) expect(true).toBe(false)
@@ -80,12 +78,10 @@ describe('user registration', () => {
 			})
 		})
 	})
-
+	
 	describe('update', () => {
-		it(' modify user password', done => {
-			const password = 1906
-
-			userPersistence.updatePassword('amir', password).then( () => {
+		it(' modify password', done => {
+			userPersistence.updatePassword('kundra', 'yhu').then( () => {
 				userschema.User.count({}, (err, count) => {
 					if (err) expect(true).toBe(false)
 					expect(count).toBe(1)
@@ -98,4 +94,7 @@ describe('user registration', () => {
 			})
 		})
 	})
+
+
+	
 })

@@ -23,68 +23,42 @@ frisby.create('Show correct tenant')
     .get('https://api-development-ab-kwais.c9users.io/t')
     .expectStatus(status.ok)
     .expectHeader('content-type', 'application/json')
-    .expectJSON('?', {
-      name: "kundra"
-    })
-.toss();
+    .expectJSON('?', {name: 'kundra'})
+    .toss()
 
 
 frisby.create('add a new tenant to system')
-  .post('https://api-development-ab-kwais.c9users.io/tenants', {
-    name: "conor",
-    age: 45,
-    locations: "New York"
-   
-  }, {json: true})
-  .expectHeaderContains('Content-Type', 'json')
-  .expectStatus(status.created)
-  .toss();
-  
-  
-frisby.create('update existing tenant')
-  .put('https://api-development-ab-kwais.c9users.io/tenants', {
-    age: 45
-   
-  }, {json: true})
+  .post('https://api-development-ab-kwais.c9users.io/tenants', { name: 'conor', age: 45, locations: 'New York'},
+  {json: true})
   .expectHeaderContains('Content-Type', 'json')
   .expectStatus(status.created)
   .toss()
-  
-  
-  
-  
- /******************************GET, POST, PUT 
-  *                                         USER **********************/
-  
+
+frisby.create('update existing tenant')
+  .put('https://api-development-ab-kwais.c9users.io/tenants', {age: 45}, {json: true})
+  .expectHeaderContains('Content-Type', 'json')
+  .expectStatus(status.created)
+  .toss()
+
+ /******************************GET, POST, PUT USER **********************/
+
  /***************************  USER REGISTRATION ***********************/
 frisby.create('Show correct user')
     .get('https://api-development-ab-kwais.c9users.io/users')
     .expectStatus(status.ok)
     .expectHeader('content-type', 'application/json')
-    .expectJSON('?', {
-      username: "amir"
-      
-    })
-.toss();
+    .expectJSON('?', { username: 'amir'})
+.toss()
 
 
 frisby.create('add a new user to system')
-  .post('https://api-development-ab-kwais.c9users.io/users', {
-    username: "yumt",
-    password: 7878
-   
-  }, {json: true})
-  .expectHeaderContains('Content-Type', 'json')
-  .expectStatus(status.created)
-  .toss();
-  
-  
-frisby.create('update existing password')
-  .put('https://api-development-ab-kwais.c9users.io/users', {
-    password: 5350
-   
-  }, {json: true})
+  .post('https://api-development-ab-kwais.c9users.io/users', {username: 'yumt',password: 7878}, {json: true})
   .expectHeaderContains('Content-Type', 'json')
   .expectStatus(status.created)
   .toss()
-  
+
+frisby.create('update existing password')
+  .put('https://api-development-ab-kwais.c9users.io/users', {password: 5350}, {json: true})
+  .expectHeaderContains('Content-Type', 'json')
+  .expectStatus(status.created)
+  .toss()

@@ -1,0 +1,9 @@
+{
+	"spec_files": [
+		"spec/tenant-spec.js",
+		"spec/user-spec.js"
+	],
+	"helpers": [
+		"helpers/**/*.js"
+	]
+}
