@@ -36,8 +36,8 @@ exports.postTenant = tenantInfo => new Promise( (resolve, reject) => {
 })
 
 
-exports.updateTenant = (tenantName, tenantAge) => new Promise( (resolve, reject) => {
-	schema.Tenant.findOneAndUpdate({name: tenantName}, {$set: {age: tenantAge}}, {new: true}, (err, tenant) => {
+exports.updateTenant = (tenantName, tenantAge, payed) => new Promise( (resolve, reject) => {
+	schema.Tenant.findOneAndUpdate({name: tenantName}, {$set: {age: tenantAge, isPayed: payed}}, {new: true}, (err, tenant) => {
 		if (err) reject(new Error('an error updating tenant data'))
 		resolve({ message: 'Tenant successfully updated!', tenant })
 	})

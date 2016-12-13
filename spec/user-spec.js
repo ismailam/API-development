@@ -24,24 +24,6 @@ describe('user collection', () => {
 		})
 	})
 	
-	describe('get', () => {
-		it(' show User', done => {
-			userPersistence.getUsers('kundra').then( () => {
-				userschema.User.count({}, (err, count) => {
-					if (err) expect(true).toBe(false)
-					expect(count).toBe(1)
-					done()
-				})
-
-			})
-		.catch( err => {
-			if (err) expect(true).toBe(false)
-			done()
-
-		})
-		})
-
-	})
 	
 	describe('remove', () => {
 		it('- existing user', done => {

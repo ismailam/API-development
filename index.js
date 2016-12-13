@@ -81,18 +81,6 @@ server.del('/tenants', /*auth.isAuthenticated,*/ (req, res) => {
 })
 
 /********************************* routing for users ***********************/
-server.get('/users', (req, res) => {
-	Manager.showUsers((err, users) => {
-		res.setHeader('content-type', 'application/json')
-		res.setHeader('accepts', 'GET')
-		res.setHeader('accept-language', 'en-GB')
-		if (err) res.send(status.badRequest, {error: err.message})
-		else res.send(status.ok, users)
-		res.end()
-	})
-})
-
-
 server.post('/users', (req, res) => {
 	Manager.addUser(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
@@ -131,17 +119,6 @@ server.del('/users', /*auth.isAuthenticated,*/ (req, res) => {
 })
 
 /************************* Tenant location Details****************************/
-server.get('/distance', /*auth.isAuthenticated,*/ (req, res) => {
-	Manager.tenantsDistance((err, distanceDetails) => {
-		res.setHeader('content-type', 'application/json')
-		res.setHeader('accepts', 'GET')
-		if (err) res.send(status.badRequest, {error: err.message})
-		else res.send(status.ok, distanceDetails)
-		res.end()
-	})
-})
-
-
 server.get('/payed', /*auth.isAuthenticated,*/ (req, res) => {
 	Manager.payed((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
