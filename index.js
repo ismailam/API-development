@@ -32,7 +32,7 @@ server.get('/tenant', /*auth.isAuthenticated,*/ (req, res) => {
 	})
 })
 
-server.get('/tenants', /*auth.isAuthenticated,*/ (req, res) => {
+server.get('/tenants', /*auth.isAuthenticated*/ (req, res) => {
 	Manager.showTenants((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
@@ -119,7 +119,7 @@ server.del('/users', /*auth.isAuthenticated,*/ (req, res) => {
 })
 
 /************************* Tenant location Details****************************/
-server.get('/payed', /*auth.isAuthenticated,*/ (req, res) => {
+server.get('tenants/payed', /*auth.isAuthenticated,*/ (req, res) => {
 	Manager.payed((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
@@ -130,7 +130,7 @@ server.get('/payed', /*auth.isAuthenticated,*/ (req, res) => {
 	})
 })
 
-server.get('/notPayed', /*auth.isAuthenticated,*/ (req, res) => {
+server.get('tenants/notPayed', /*auth.isAuthenticated,*/ (req, res) => {
 	Manager.notPayed((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')

@@ -17,6 +17,7 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "frisby": "^0.8.5",
+    "fs": "0.0.1-security",
     "googleapis": "^14.2.0",
     "jasmine": "^2.5.2",
     "jasmine-console-reporter": "^1.2.7",
@@ -26,6 +27,8 @@
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",
     "restify-cookies": "^0.2.2",
-    "restify-session": "^1.1.1"
+    "restify-session": "^1.1.1",
+    "rewire": "^2.5.2",
+    "sync-request": "^3.0.1"
   }
 }

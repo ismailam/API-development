@@ -34,7 +34,7 @@ exports.addTenant = (request, callback) => {
 		this.name = name
 		console.log(this.name)
 		return extractBodyKey(request, 'age')
-		//return locations.getLocation(request.body.locations);
+
 	})
 	.then( age => {
 		this.age = age
@@ -48,18 +48,19 @@ exports.addTenant = (request, callback) => {
 		this.locations = location
 		return googleLocation.getLocation(location)
 	})
-	.then((location)=> {
+	.then((location) => {
 		this.details = location
 		return extractBodyKey(request, 'locations')
 	}).then(locations => {
 		const tenantLocation = locations
 		const agencyLocation = '3 Vecqueray St, Coventry'
+
 		return googleLocation.distanceFromAgency(agencyLocation, tenantLocation)
 	})
 	.then( (distances) => {
 		console.log(distances)
-		this.id = rand(36, 7)
-		return persistence.postTenant({tenantId : this.id, name: this.name, age: this.age, isPayed: this.isPayed, locationDetails: this.details, distance: distances})
+		this.id = rand(687, 7)
+		return persistence.postTenant({tenantId: this.id, name: this.name, age: this.age, isPayed: this.isPayed, locationDetails: this.details, distance: distances})
 	})
 	.then( data => callback(null, data))
 	.catch( err => callback(err))
@@ -101,7 +102,7 @@ exports.payed = (callback) => {
 		callback(err)
 	})
 
-} 
+}
 
 exports.notPayed = (callback) => {
 	persistence.isPayed(false)
@@ -110,15 +111,13 @@ exports.notPayed = (callback) => {
 	}).catch(err => {
 		callback(err)
 	})
-} 
+
+}
 
 
 /********************** MANAGING USER REGISTRATION **************************************/
 
-
-
-
-// //add tenant
+//add User
 exports.addUser = (request, callback) => {
 	extractBodyKey(request, 'username')
 	.then( username => {
@@ -130,7 +129,6 @@ exports.addUser = (request, callback) => {
 	.then( password => {
 		this.password = password
 		console.log(this.password)
-	
 	})
 	.then( () => {
 		return userPersistence.postUser({username: this.username, password: this.password })

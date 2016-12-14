@@ -52,15 +52,6 @@ exports.deleteTenant = tenantName => new Promise( (resolve, reject) => {
 })
 
 
-exports.Count = callback => {
-	schema.Tenant.count({}, (err, count) => {
-		if (err) {
-			callback(err)
-		}
-		callback(null, count)
-	})
-}
-
 //checks if tenant has payed rent
 exports.isPayed = payed => new Promise( (resolve, reject) => {
 	schema.Tenant.find({isPayed: payed}, (err, tenants) => {

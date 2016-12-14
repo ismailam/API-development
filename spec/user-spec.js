@@ -23,8 +23,7 @@ describe('user collection', () => {
 
 		})
 	})
-	
-	
+
 	describe('remove', () => {
 		it('- existing user', done => {
 			userPersistence.deleteUser('kundra').then( () => {
@@ -41,7 +40,7 @@ describe('user collection', () => {
 			})
 		})
 	})
-	
+
 	describe('add', () => {
 		it('+ new user', done => {
 			const userI = {username: 'jafru', password: 'coventry'}
@@ -60,7 +59,7 @@ describe('user collection', () => {
 			})
 		})
 	})
-	
+
 	describe('update', () => {
 		it(' modify password', done => {
 			userPersistence.updatePassword('kundra', 'yhu').then( () => {
@@ -78,5 +77,4 @@ describe('user collection', () => {
 	})
 
 
-	
 })

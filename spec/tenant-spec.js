@@ -25,7 +25,7 @@ describe('tenant collection', () => {
 
 		})
 	})
-	
+
 	describe('get', () => {
 		it(' show all users', done => {
 			persistence.getTenants().then( () => {

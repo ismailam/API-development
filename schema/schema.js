@@ -17,7 +17,7 @@ const tenantSchema = new Schema({
 	name: String,
 	age: Number,
 	Email: String,
-	location: Object,
+	locationDetails: Object,
 	distance: Object,
 	isPayed: Boolean,
 	added: Date,
