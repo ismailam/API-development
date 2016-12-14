@@ -2,7 +2,11 @@
 
 const request = require('request')
 
-//shows tenants locations
+/**
+ * This module takes in the address of the tenant, gets the house number, postcode and adds it to the tenant!
+ * @param {string} location - the address of the tenant.
+ * @return {Promise<object|Error>} Location Details.
+ */
 exports.getLocation = location => new Promise( (resolve, reject) => {
 	const url = `https://maps.googleapis.com/maps/api/geocode/json?region=gb&units=metric&appid=44c39f3fa462f86b3fc88f5678e5c5ff&address=${location}`
 
@@ -25,7 +29,13 @@ exports.getLocation = location => new Promise( (resolve, reject) => {
 	})
 })
 
-//shows tenants distance from tenancy agency
+
+/**
+ * This module gets the distance between the agency location and tenant location ands it to the tenant object!
+ * @param {string} agencyLocation - The username already created.
+ * @param {string} tenantsLocation - The new password to update.
+ * @return {Promise<object|Error>} distance details.
+ */
 exports.distanceFromAgency = (agencyLocation, tenantsLocation) => new Promise( (resolve, reject) => {
 
 	const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${agencyLocation}&destinations=${tenantsLocation}&key=AIzaSyDhxZcgm_f3Tdc93_LHhl2KA9MUj1Eh_jc`

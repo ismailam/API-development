@@ -21,7 +21,7 @@ const status = {
 const defaultPort = 8080
 
 
-server.get('/tenant', /*auth.isAuthenticated,*/ (req, res) => {
+server.get('/tenant', auth.isAuthenticated, (req, res) => {
 	Manager.showTenant((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
@@ -32,7 +32,7 @@ server.get('/tenant', /*auth.isAuthenticated,*/ (req, res) => {
 	})
 })
 
-server.get('/tenants', /*auth.isAuthenticated*/ (req, res) => {
+server.get('/tenants', auth.isAuthenticated, (req, res) => {
 	Manager.showTenants((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
@@ -44,7 +44,7 @@ server.get('/tenants', /*auth.isAuthenticated*/ (req, res) => {
 })
 
 
-server.post('/tenants', /*auth.isAuthenticated,*/ (req, res) => {
+server.post('/tenants', auth.isAuthenticated, (req, res) => {
 	Manager.addTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST'),
@@ -57,7 +57,7 @@ server.post('/tenants', /*auth.isAuthenticated,*/ (req, res) => {
 })
 
 
-server.put('/tenants',/*auth.isAuthenticated,*/ (req, res) => {
+server.put('/tenants', auth.isAuthenticated, (req, res) => {
 	Manager.putTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET, POST', 'PUT')
@@ -69,7 +69,7 @@ server.put('/tenants',/*auth.isAuthenticated,*/ (req, res) => {
 	})
 })
 
-server.del('/tenants', /*auth.isAuthenticated,*/ (req, res) => {
+server.del('/tenants', auth.isAuthenticated, (req, res) => {
 	Manager.removeTenant(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'DELETE')
@@ -93,7 +93,7 @@ server.post('/users', (req, res) => {
 	})
 })
 
-server.put('/users', (req, res) => {
+server.put('/users', auth.isAuthenticated, (req, res) => {
 	Manager.putUser(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'PUT')
@@ -107,7 +107,7 @@ server.put('/users', (req, res) => {
 
 
 //delets users
-server.del('/users', /*auth.isAuthenticated,*/ (req, res) => {
+server.del('/users', auth.isAuthenticated, (req, res) => {
 	Manager.removeUser(req, (err, data) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'DELETE')
@@ -119,7 +119,7 @@ server.del('/users', /*auth.isAuthenticated,*/ (req, res) => {
 })
 
 /************************* Tenant location Details****************************/
-server.get('tenants/payed', /*auth.isAuthenticated,*/ (req, res) => {
+server.get('tenants/payed', auth.isAuthenticated, (req, res) => {
 	Manager.payed((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
@@ -130,7 +130,7 @@ server.get('tenants/payed', /*auth.isAuthenticated,*/ (req, res) => {
 	})
 })
 
-server.get('tenants/notpayed', /*auth.isAuthenticated,*/ (req, res) => {
+server.get('tenants/notpayed', auth.isAuthenticated, (req, res) => {
 	Manager.notPayed((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')
