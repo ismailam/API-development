@@ -130,7 +130,7 @@ server.get('tenants/payed', /*auth.isAuthenticated,*/ (req, res) => {
 	})
 })
 
-server.get('tenants/notPayed', /*auth.isAuthenticated,*/ (req, res) => {
+server.get('tenants/notpayed', /*auth.isAuthenticated,*/ (req, res) => {
 	Manager.notPayed((err, tenants) => {
 		res.setHeader('content-type', 'application/json')
 		res.setHeader('accepts', 'GET')

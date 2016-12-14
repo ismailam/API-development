@@ -59,7 +59,7 @@ exports.addTenant = (request, callback) => {
 	})
 	.then( (distances) => {
 		console.log(distances)
-		this.id = rand(687, 7)
+		this.id = rand(37, 7)
 		return persistence.postTenant({tenantId: this.id, name: this.name, age: this.age, isPayed: this.isPayed, locationDetails: this.details, distance: distances})
 	})
 	.then( data => callback(null, data))
